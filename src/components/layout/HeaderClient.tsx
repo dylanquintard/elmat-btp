@@ -61,12 +61,18 @@ export function HeaderClient({ companyName, logoUrl, compactLogoUrl, phoneLabel,
       className="sticky top-0 z-40 border-b backdrop-blur"
       style={{ backgroundColor: "var(--header-bg)", borderColor: "var(--header-border)" }}
     >
-      <div className="mx-auto flex h-24 max-w-6xl items-center justify-between px-4" style={{ color: "var(--header-text)" }}>
-        <Link href="/" className="relative flex h-20 w-[220px] items-center gap-3 font-semibold tracking-wide md:w-[420px]">
+      <div
+        className={`mx-auto flex max-w-7xl items-center justify-between px-4 transition-all duration-200 ${isCompact ? "h-20" : "h-40"}`}
+        style={{ color: "var(--header-text)" }}
+      >
+        <Link
+          href="/"
+          className={`relative flex shrink-0 items-center overflow-hidden gap-3 font-semibold tracking-wide transition-all duration-200 ${isCompact ? "h-16 w-[220px] md:w-[320px]" : "h-36 w-[360px] md:w-[780px]"}`}
+        >
           {logoUrl ? (
             <>
               <span
-                className={`pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 overflow-hidden transition-opacity duration-200 ${isCompact ? "opacity-0" : "opacity-100"}`}
+                className={`pointer-events-none absolute left-0 top-1/2 h-full -translate-y-1/2 overflow-hidden transition-opacity duration-200 ${isCompact ? "opacity-0" : "opacity-100"}`}
                 aria-hidden={isCompact}
               >
                 <Image
@@ -76,21 +82,21 @@ export function HeaderClient({ companyName, logoUrl, compactLogoUrl, phoneLabel,
                   height={248}
                   priority
                   sizes="(max-width: 768px) 520px, 840px"
-                  className="h-20 w-auto object-contain md:h-24"
+                  className="h-full w-auto max-h-full object-contain"
                 />
               </span>
               {compactLogoUrl ? (
                 <span
-                  className={`pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 overflow-hidden transition-opacity duration-200 ${isCompact ? "opacity-100" : "opacity-0"}`}
+                  className={`pointer-events-none absolute left-0 top-1/2 overflow-hidden transition-opacity duration-200 ${isCompact ? "h-[64%] -translate-y-1/2 opacity-100" : "h-[92%] -translate-y-1/2 opacity-0"}`}
                   aria-hidden={!isCompact}
                 >
                   <Image
                     src={compactLogoUrl}
                     alt={`Logo compact ${companyName}`}
-                    width={260}
-                    height={72}
-                    sizes="260px"
-                    className="h-8 w-auto object-contain md:h-10"
+                    width={840}
+                    height={248}
+                    sizes="(max-width: 768px) 520px, 840px"
+                    className="h-full w-auto max-h-full object-contain"
                   />
                 </span>
               ) : (
@@ -108,12 +114,12 @@ export function HeaderClient({ companyName, logoUrl, compactLogoUrl, phoneLabel,
             </span>
           )}
         </Link>
-        <nav className="hidden gap-7 text-base md:flex">
+        <nav className={`absolute left-1/2 hidden -translate-x-1/2 items-center justify-center text-base md:flex ${isCompact ? "gap-6 lg:gap-8" : "gap-8 lg:gap-10"}`}>
           <Link href="/services" aria-current={pathname === "/services" ? "page" : undefined}>Services</Link>
           <Link href="/realisations" aria-current={pathname === "/realisations" ? "page" : undefined}>Nos Chantiers</Link>
           <Link href="/contact" aria-current={pathname === "/contact" ? "page" : undefined}>Devis</Link>
         </nav>
-        <div className="flex items-center gap-2 md:gap-3">
+        <div className="flex shrink-0 items-center gap-2 md:gap-3">
           <button
             type="button"
             className="rounded border border-white/30 px-2.5 py-2 text-xs font-semibold uppercase tracking-wide md:hidden"
@@ -138,7 +144,8 @@ export function HeaderClient({ companyName, logoUrl, compactLogoUrl, phoneLabel,
         <div
           role="button"
           tabIndex={0}
-          className="fixed inset-0 top-24 z-30 bg-black/20 md:hidden"
+          className="fixed inset-0 z-30 bg-black/20 md:hidden"
+          style={{ top: isCompact ? "5rem" : "10rem" }}
           onClick={() => setMobileMenuOpen(false)}
           onKeyDown={(event) => {
             if (event.key === "Enter" || event.key === " ") setMobileMenuOpen(false);
