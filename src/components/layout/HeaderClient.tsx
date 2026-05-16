@@ -57,11 +57,11 @@ export function HeaderClient({ companyName, logoUrl, phoneLabel, phoneHref }: He
 
   return (
     <header
-      className="sticky top-0 z-40 border-b backdrop-blur transition-all duration-300"
+      className="sticky top-0 z-40 border-b backdrop-blur"
       style={{ backgroundColor: "var(--header-bg)", borderColor: "var(--header-border)" }}
     >
-      <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-4" style={{ color: "var(--header-text)" }}>
-        <Link href="/" className="relative flex h-14 w-[180px] items-center gap-3 font-semibold tracking-wide md:w-[320px]">
+      <div className="mx-auto flex h-28 max-w-6xl items-center justify-between px-4" style={{ color: "var(--header-text)" }}>
+        <Link href="/" className="relative flex h-24 w-[220px] items-center gap-3 font-semibold tracking-wide md:w-[440px]">
           {logoUrl ? (
             <>
               <span
@@ -75,7 +75,7 @@ export function HeaderClient({ companyName, logoUrl, phoneLabel, phoneHref }: He
                   height={248}
                   priority
                   sizes="(max-width: 768px) 520px, 840px"
-                  className="h-12 w-auto object-contain md:h-14"
+                  className="h-24 w-auto object-contain md:h-28"
                 />
               </span>
               <span
@@ -121,7 +121,7 @@ export function HeaderClient({ companyName, logoUrl, phoneLabel, phoneHref }: He
         <div
           role="button"
           tabIndex={0}
-          className="fixed inset-0 top-[56px] z-30 bg-black/20 md:hidden"
+          className="fixed inset-0 top-28 z-30 bg-black/20 md:hidden"
           onClick={() => setMobileMenuOpen(false)}
           onKeyDown={(event) => {
             if (event.key === "Enter" || event.key === " ") setMobileMenuOpen(false);
