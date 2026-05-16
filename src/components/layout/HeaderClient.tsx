@@ -60,11 +60,14 @@ export function HeaderClient({ companyName, logoUrl, phoneLabel, phoneHref }: He
       className="sticky top-0 z-40 border-b backdrop-blur transition-all duration-300"
       style={{ backgroundColor: "var(--header-bg)", borderColor: "var(--header-border)" }}
     >
-      <div className={`mx-auto flex max-w-6xl items-center justify-between px-4 transition-all duration-300 ${isCompact ? "py-2.5" : "py-4"}`} style={{ color: "var(--header-text)" }}>
-        <Link href="/" className="flex items-center gap-3 font-semibold tracking-wide">
+      <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-4" style={{ color: "var(--header-text)" }}>
+        <Link href="/" className="relative flex h-14 w-[180px] items-center gap-3 font-semibold tracking-wide md:w-[320px]">
           {logoUrl ? (
             <>
-              <span className={`block overflow-hidden transition-all duration-300 ${isCompact ? "max-h-0 opacity-0" : "max-h-40 opacity-100"}`}>
+              <span
+                className={`pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 overflow-hidden transition-opacity duration-200 ${isCompact ? "opacity-0" : "opacity-100"}`}
+                aria-hidden={isCompact}
+              >
                 <Image
                   src={logoUrl}
                   alt={`Logo ${companyName}`}
@@ -72,15 +75,18 @@ export function HeaderClient({ companyName, logoUrl, phoneLabel, phoneHref }: He
                   height={248}
                   priority
                   sizes="(max-width: 768px) 520px, 840px"
-                  className="h-32 w-auto object-contain md:h-40"
+                  className="h-12 w-auto object-contain md:h-14"
                 />
               </span>
-              <span className={`text-sm uppercase tracking-[0.12em] transition-all duration-300 ${isCompact ? "max-h-10 opacity-100" : "max-h-0 opacity-0"}`}>
+              <span
+                className={`text-sm uppercase tracking-[0.12em] transition-opacity duration-200 ${isCompact ? "opacity-100" : "opacity-0"}`}
+                aria-hidden={!isCompact}
+              >
                 Accueil
               </span>
             </>
           ) : (
-            <span className={`text-sm uppercase tracking-[0.12em] transition-opacity duration-300 ${isCompact ? "opacity-100" : "opacity-100"}`}>
+            <span className="text-sm uppercase tracking-[0.12em]">
               {isCompact ? "Accueil" : companyName}
             </span>
           )}
