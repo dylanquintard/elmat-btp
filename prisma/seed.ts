@@ -36,11 +36,26 @@ async function main() {
           "ELMAT intervient en maconnerie, renovation et demolition pour vos chantiers en Haute-Savoie, en proximite de Geneve cote France.",
         phone: "+33 4 50 00 00 00",
         email: "contact@elmat.fr",
+        address: "Valleiry",
         city: "Valleiry",
+        postalCode: "74520",
         country: "France",
+        openingHours: "Lundi au vendredi 08:00-18:30",
+        googleMapsUrl: "https://maps.google.com",
         seoTitle: "ELMAT - Entreprise generale du batiment",
         seoDescription:
           "ELMAT, entreprise generale du batiment : maconnerie, renovation et demolition en Haute-Savoie, proximite Geneve cote France.",
+      },
+    });
+  } else {
+    await prisma.siteSetting.update({
+      where: { id: settings.id },
+      data: {
+        address: settings.address || "Valleiry",
+        city: settings.city || "Valleiry",
+        postalCode: settings.postalCode || "74520",
+        country: settings.country || "France",
+        openingHours: settings.openingHours || "Lundi au vendredi 08:00-18:30",
       },
     });
   }
@@ -195,9 +210,11 @@ async function main() {
       slug: "chantier-annecy-renovation-salon",
       city: "Annecy",
       description: "Renovation complete d'un salon avec reprise des murs, isolation et finitions haut de gamme.",
+      detailedDescription:
+        "Ouverture partielle des volumes, remise a niveau des murs, preparation des supports, finitions soignées et mise en valeur des espaces de vie.",
       problem: "Pieces vieillissantes avec defauts d'isolation et murs abimes.",
       solution: "Reprise structurelle legere, isolation, finitions peintures et eclairage modernise.",
-      serviceSlug: "renovation-interieure",
+      serviceSlug: "renovation-interieure-exterieure",
       images: [
         { type: ProjectImageType.BEFORE, url: "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80", alt: "Salon avant travaux" },
         { type: ProjectImageType.AFTER, url: "https://images.unsplash.com/photo-1493666438817-866a91353ca9?auto=format&fit=crop&w=1200&q=80", alt: "Salon apres renovation" },
@@ -208,6 +225,8 @@ async function main() {
       slug: "chantier-annemasse-reprise-maconnerie-facade",
       city: "Annemasse",
       description: "Reprise de fissures facade et consolidation maconnerie avec traitement durable.",
+      detailedDescription:
+        "Diagnostic des fissurations, purge des zones fragiles, reprise des joints et traitement de protection pour assurer la tenue dans le temps.",
       problem: "Fissures actives et humidite sur facade exposee.",
       solution: "Purge, reprise des joints et traitement hydrofuge complet.",
       serviceSlug: "maconnerie-generale",
@@ -221,9 +240,11 @@ async function main() {
       slug: "chantier-saint-julien-en-genevois-terrasse-exterieure",
       city: "Saint-Julien-en-Genevois",
       description: "Creation d'une terrasse exterieure avec dalle beton, finition et acces jardin.",
+      detailedDescription:
+        "Preparation complete du terrain, coulage d'une dalle stable et finition exterieure pour un usage confortable et durable.",
       problem: "Exterieur difficilement exploitable et sol instable.",
       solution: "Preparation du support, dalle armee et finition antiderapante.",
-      serviceSlug: "amenagement-exterieur",
+      serviceSlug: "dalle-beton-et-chape",
       images: [
         { type: ProjectImageType.BEFORE, url: "https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=1200&q=80", alt: "Exterieur avant amenagement" },
         { type: ProjectImageType.AFTER, url: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80", alt: "Terrasse apres travaux" },
@@ -234,9 +255,11 @@ async function main() {
       slug: "chantier-thonon-dalle-beton-garage",
       city: "Thonon-les-Bains",
       description: "Realisation d'une dalle beton pour garage avec preparation de fondations.",
+      detailedDescription:
+        "Terrassement, coffrage et ferraillage adaptes au support existant, puis coulage d'une dalle robuste prete pour les finitions.",
       problem: "Sol en pente et impossibilite de stationnement stable.",
       solution: "Terrassement, coffrage, ferraillage et coulage d'une dalle armee.",
-      serviceSlug: "dalle-beton-fondations",
+      serviceSlug: "dalle-beton-et-chape",
       images: [
         { type: ProjectImageType.BEFORE, url: "https://images.unsplash.com/photo-1448630360428-65456885c650?auto=format&fit=crop&w=1200&q=80", alt: "Terrain avant dalle" },
         { type: ProjectImageType.AFTER, url: "https://images.unsplash.com/photo-1460574283810-2aab119d8511?auto=format&fit=crop&w=1200&q=80", alt: "Dalle beton finalisee" },
@@ -255,6 +278,7 @@ async function main() {
         city: p.city,
         country: "France",
         description: p.description,
+        detailedDescription: p.detailedDescription,
         problem: p.problem,
         solution: p.solution,
         serviceId: service?.id,
@@ -268,6 +292,7 @@ async function main() {
         country: "France",
         duration: "4 a 8 semaines",
         description: p.description,
+        detailedDescription: p.detailedDescription,
         problem: p.problem,
         solution: p.solution,
         serviceId: service?.id,
@@ -295,6 +320,35 @@ async function main() {
     }
 
     projectPos += 1;
+  }
+
+  const galleryCount = await prisma.galleryItem.count();
+  if (galleryCount === 0) {
+    await prisma.galleryItem.createMany({
+      data: [
+        {
+          title: "Renovation interieure",
+          imageUrl: "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80",
+          city: "Annecy",
+          isPublished: true,
+          position: 1,
+        },
+        {
+          title: "Maconnerie exterieure",
+          imageUrl: "https://images.unsplash.com/photo-1460317442991-0ec209397118?auto=format&fit=crop&w=1200&q=80",
+          city: "Annemasse",
+          isPublished: true,
+          position: 2,
+        },
+        {
+          title: "Dalle beton",
+          imageUrl: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80",
+          city: "Saint-Julien-en-Genevois",
+          isPublished: true,
+          position: 3,
+        },
+      ],
+    });
   }
 }
 

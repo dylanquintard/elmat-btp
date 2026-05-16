@@ -19,12 +19,29 @@ export function HeaderClient({ companyName, logoUrl, phoneLabel, phoneHref }: He
   const pathname = usePathname();
 
   useEffect(() => {
+    // Always close mobile menu on route change to avoid stale overlay blocking scroll.
+    setMobileMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
     if (!mobileMenuOpen) return;
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") setMobileMenuOpen(false);
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
+  }, [mobileMenuOpen]);
+
+  useEffect(() => {
+    // Prevent background scroll only while the mobile menu is open.
+    if (!mobileMenuOpen) {
+      document.body.style.overflow = "";
+      return;
+    }
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [mobileMenuOpen]);
 
   useEffect(() => {
@@ -95,10 +112,14 @@ export function HeaderClient({ companyName, logoUrl, phoneLabel, phoneHref }: He
         </div>
       </div>
       {mobileMenuOpen ? (
-        <button
-          type="button"
+        <div
+          role="button"
+          tabIndex={0}
           className="fixed inset-0 top-[56px] z-30 bg-black/20 md:hidden"
           onClick={() => setMobileMenuOpen(false)}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" || event.key === " ") setMobileMenuOpen(false);
+          }}
           aria-label="Fermer le menu mobile"
         />
       ) : null}
