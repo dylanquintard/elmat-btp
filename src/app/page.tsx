@@ -4,7 +4,6 @@ import Image from "next/image";
 import { prisma } from "@/lib/prisma";
 import { getLocalBusinessJsonLd } from "@/lib/seo";
 import { HomeGallery } from "@/components/public/HomeGallery";
-import { ScrollProgress } from "@/components/public/ScrollProgress";
 import { RevealSection } from "@/components/public/RevealSection";
 
 export default async function HomePage() {
@@ -117,10 +116,6 @@ export default async function HomePage() {
 
   return (
     <div className="relative space-y-12 overflow-x-clip">
-      <ScrollProgress />
-      <div className="pointer-events-none fixed -left-20 top-24 z-0 h-72 w-72 rounded-full bg-amber-300/30 blur-3xl animate-pulse" />
-      <div className="pointer-events-none fixed -right-24 bottom-24 z-0 h-80 w-80 rounded-full bg-zinc-700/20 blur-3xl animate-pulse" />
-
       <RevealSection
         className="relative overflow-hidden rounded-2xl bg-zinc-900 p-8 text-zinc-100"
       >

@@ -29,7 +29,8 @@ export function HeaderClient({ companyName, logoUrl, phoneLabel, phoneHref }: He
 
   useEffect(() => {
     const onScroll = () => {
-      setIsCompact(window.scrollY > 64);
+      const next = window.scrollY > 64;
+      setIsCompact((prev) => (prev === next ? prev : next));
     };
 
     onScroll();
