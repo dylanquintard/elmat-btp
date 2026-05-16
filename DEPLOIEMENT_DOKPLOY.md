@@ -21,6 +21,7 @@ Variables critiques:
 - `NEXT_PUBLIC_SITE_URL=https://ton-domaine.fr`
 - `AUTH_SECRET` (long secret random)
 - `ADMIN_EMAIL` / `ADMIN_PASSWORD`
+- `RUN_DB_SEED_ON_START=true` (a activer une seule fois pour injecter services/chantiers de presentation)
 - `POSTGRES_*`
 - `SMTP_*` + `MAIL_FROM` + `CONTACT_RECEIVER`
 
@@ -61,4 +62,3 @@ Variables critiques:
 Pour chaque changement:
 1. Push Git
 2. Redeploy dans Dokploy
-
