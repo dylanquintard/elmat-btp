@@ -11,6 +11,7 @@ export const adminSettingsSchema = z.object({
   postalCode: z.string().optional().nullable(),
   country: z.string().optional().nullable(),
   logoUrl: z.string().optional().nullable(),
+  compactLogoUrl: z.string().optional().nullable(),
   heroImageUrl: z.string().optional().nullable(),
   facebookUrl: z.string().optional().nullable(),
   instagramUrl: z.string().optional().nullable(),

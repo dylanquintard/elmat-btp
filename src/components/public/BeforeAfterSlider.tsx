@@ -53,13 +53,14 @@ export function BeforeAfterSlider({
         ref={frameRef}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
-        className={`relative cursor-ew-resize overflow-hidden rounded-xl border border-zinc-300 bg-zinc-200 touch-none ${compact ? "mx-auto w-[88%] aspect-[16/10] md:w-[82%] md:aspect-[16/9.6]" : "aspect-[16/10]"}`}
+        className={`relative cursor-ew-resize overflow-hidden rounded-xl border border-zinc-300 bg-zinc-200 touch-none ${compact ? "mx-auto w-[84%] aspect-[16/10.4] md:w-[76%] md:aspect-[16/10]" : "aspect-[16/10.4]"}`}
       >
         <Image
           src={afterUrl}
           alt={afterLabel ?? "Photo apres travaux"}
           fill
-          sizes="(max-width: 768px) 100vw, 920px"
+          sizes={compact ? "(max-width: 768px) 84vw, 620px" : "(max-width: 768px) 96vw, 920px"}
+          quality={72}
           className="object-cover"
           draggable={false}
         />
@@ -67,7 +68,8 @@ export function BeforeAfterSlider({
           src={beforeUrl}
           alt={beforeLabel ?? "Photo avant travaux"}
           fill
-          sizes="(max-width: 768px) 100vw, 920px"
+          sizes={compact ? "(max-width: 768px) 84vw, 620px" : "(max-width: 768px) 96vw, 920px"}
+          quality={72}
           className="object-cover"
           style={{ clipPath }}
           draggable={false}

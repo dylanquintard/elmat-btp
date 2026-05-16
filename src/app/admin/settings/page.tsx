@@ -14,6 +14,7 @@ type SiteSetting = {
   city?: string | null;
   country?: string | null;
   logoUrl?: string | null;
+  compactLogoUrl?: string | null;
   heroImageUrl?: string | null;
   facebookUrl?: string | null;
   instagramUrl?: string | null;
@@ -34,6 +35,7 @@ const initialState: SiteSetting = {
   city: "",
   country: "",
   logoUrl: "",
+  compactLogoUrl: "",
   heroImageUrl: "",
   facebookUrl: "",
   instagramUrl: "",
@@ -87,6 +89,14 @@ export default function AdminSettingsPage() {
             label="Logo entreprise"
             value={form.logoUrl ?? ""}
             onChange={(url) => setForm((s) => ({ ...s, logoUrl: url }))}
+            uploadKind="logo"
+          />
+        </div>
+        <div className="md:col-span-2">
+          <AdminImageUploadField
+            label="Logo header au defilement (optionnel)"
+            value={form.compactLogoUrl ?? ""}
+            onChange={(url) => setForm((s) => ({ ...s, compactLogoUrl: url }))}
             uploadKind="logo"
           />
         </div>

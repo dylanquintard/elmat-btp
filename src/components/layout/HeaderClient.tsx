@@ -9,11 +9,12 @@ import { ThemePicker } from "@/components/layout/ThemePicker";
 type HeaderClientProps = {
   companyName: string;
   logoUrl: string | null;
+  compactLogoUrl?: string | null;
   phoneLabel: string;
   phoneHref: string;
 };
 
-export function HeaderClient({ companyName, logoUrl, phoneLabel, phoneHref }: HeaderClientProps) {
+export function HeaderClient({ companyName, logoUrl, compactLogoUrl, phoneLabel, phoneHref }: HeaderClientProps) {
   const [isCompact, setIsCompact] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
@@ -60,8 +61,8 @@ export function HeaderClient({ companyName, logoUrl, phoneLabel, phoneHref }: He
       className="sticky top-0 z-40 border-b backdrop-blur"
       style={{ backgroundColor: "var(--header-bg)", borderColor: "var(--header-border)" }}
     >
-      <div className="mx-auto flex h-28 max-w-6xl items-center justify-between px-4" style={{ color: "var(--header-text)" }}>
-        <Link href="/" className="relative flex h-24 w-[220px] items-center gap-3 font-semibold tracking-wide md:w-[440px]">
+      <div className="mx-auto flex h-24 max-w-6xl items-center justify-between px-4" style={{ color: "var(--header-text)" }}>
+        <Link href="/" className="relative flex h-20 w-[220px] items-center gap-3 font-semibold tracking-wide md:w-[420px]">
           {logoUrl ? (
             <>
               <span
@@ -75,15 +76,31 @@ export function HeaderClient({ companyName, logoUrl, phoneLabel, phoneHref }: He
                   height={248}
                   priority
                   sizes="(max-width: 768px) 520px, 840px"
-                  className="h-24 w-auto object-contain md:h-28"
+                  className="h-20 w-auto object-contain md:h-24"
                 />
               </span>
-              <span
-                className={`text-sm uppercase tracking-[0.12em] transition-opacity duration-200 ${isCompact ? "opacity-100" : "opacity-0"}`}
-                aria-hidden={!isCompact}
-              >
-                Accueil
-              </span>
+              {compactLogoUrl ? (
+                <span
+                  className={`pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 overflow-hidden transition-opacity duration-200 ${isCompact ? "opacity-100" : "opacity-0"}`}
+                  aria-hidden={!isCompact}
+                >
+                  <Image
+                    src={compactLogoUrl}
+                    alt={`Logo compact ${companyName}`}
+                    width={260}
+                    height={72}
+                    sizes="260px"
+                    className="h-8 w-auto object-contain md:h-10"
+                  />
+                </span>
+              ) : (
+                <span
+                  className={`text-sm uppercase tracking-[0.12em] transition-opacity duration-200 ${isCompact ? "opacity-100" : "opacity-0"}`}
+                  aria-hidden={!isCompact}
+                >
+                  Accueil
+                </span>
+              )}
             </>
           ) : (
             <span className="text-sm uppercase tracking-[0.12em]">
@@ -121,7 +138,7 @@ export function HeaderClient({ companyName, logoUrl, phoneLabel, phoneHref }: He
         <div
           role="button"
           tabIndex={0}
-          className="fixed inset-0 top-28 z-30 bg-black/20 md:hidden"
+          className="fixed inset-0 top-24 z-30 bg-black/20 md:hidden"
           onClick={() => setMobileMenuOpen(false)}
           onKeyDown={(event) => {
             if (event.key === "Enter" || event.key === " ") setMobileMenuOpen(false);

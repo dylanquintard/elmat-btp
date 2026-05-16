@@ -10,10 +10,17 @@ export async function Header() {
   const settings = await prisma.siteSetting.findFirst();
   const companyName = settings?.companyName?.trim() || "Entreprise BTP";
   const logoUrl = settings?.logoUrl?.trim() || null;
+  const compactLogoUrl = settings?.compactLogoUrl?.trim() || null;
   const phoneHref = toTelHref(settings?.phone);
   const phoneLabel = settings?.phone?.trim() || "Appeler";
 
   return (
-    <HeaderClient companyName={companyName} logoUrl={logoUrl} phoneHref={phoneHref} phoneLabel={phoneLabel} />
+    <HeaderClient
+      companyName={companyName}
+      logoUrl={logoUrl}
+      compactLogoUrl={compactLogoUrl}
+      phoneHref={phoneHref}
+      phoneLabel={phoneLabel}
+    />
   );
 }

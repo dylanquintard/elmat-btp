@@ -127,8 +127,15 @@ export default async function RealisationDetailPage({ params }: { params: Promis
           <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
             {galleryImages.map((img) => (
               <figure key={img.id} className="overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50">
-                <div className="relative aspect-[4/3]">
-                  <Image src={img.url} alt={img.alt ?? project.title} fill sizes="(max-width: 768px) 50vw, 33vw" className="object-cover" />
+                <div className="relative aspect-[16/11]">
+                  <Image
+                    src={img.url}
+                    alt={img.alt ?? project.title}
+                    fill
+                    sizes="(max-width: 768px) 48vw, (max-width: 1280px) 30vw, 360px"
+                    quality={72}
+                    className="object-cover"
+                  />
                 </div>
                 {img.alt ? <figcaption className="line-clamp-2 p-2 text-xs text-zinc-600">{img.alt}</figcaption> : null}
               </figure>

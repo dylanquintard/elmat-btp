@@ -31,7 +31,8 @@ export function ServicesDynamicGrid({ services }: ServicesDynamicGridProps) {
                     src={s.imageUrl}
                     alt={s.title}
                     fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 620px"
+                    quality={72}
                     className="object-cover"
                   />
                 </div>

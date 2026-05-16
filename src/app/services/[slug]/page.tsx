@@ -73,8 +73,15 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
         </div>
         <div>
           {service.imageUrl ? (
-            <div className="relative aspect-[4/3] overflow-hidden rounded-xl border bg-zinc-100">
-              <Image src={service.imageUrl} alt={service.title} fill sizes="(max-width: 1024px) 100vw, 50vw" className="pointer-events-none select-none object-cover" />
+            <div className="relative mx-auto aspect-[16/11] max-w-xl overflow-hidden rounded-xl border bg-zinc-100">
+              <Image
+                src={service.imageUrl}
+                alt={service.title}
+                fill
+                sizes="(max-width: 1024px) 92vw, 520px"
+                quality={74}
+                className="pointer-events-none select-none object-cover"
+              />
             </div>
           ) : (
             <div className="rounded-xl border border-dashed bg-zinc-50 p-8 text-center text-sm text-zinc-500">

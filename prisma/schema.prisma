@@ -35,6 +35,7 @@ model SiteSetting {
   postalCode    String?
   country       String?  @default("France")
   logoUrl       String?
+  compactLogoUrl String?
   heroImageUrl  String?
   facebookUrl   String?
   instagramUrl  String?
