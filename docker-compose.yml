@@ -1,0 +1,36 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: btp-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: btp_user
+      POSTGRES_PASSWORD: btp_password
+      POSTGRES_DB: btp_showcase
+    ports:
+      - "5432:5432"
+    volumes:
+      - btp_postgres_data:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: btp-app
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+    ports:
+      - "3000:3000"
+    volumes:
+      - btp_uploads:/app/uploads
+    depends_on:
+      - postgres
+
+volumes:
+  btp_postgres_data:
+  btp_uploads:

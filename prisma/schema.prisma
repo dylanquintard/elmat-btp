@@ -1,0 +1,164 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ProjectImageType {
+  BEFORE
+  DURING
+  AFTER
+  GENERAL
+}
+
+model AdminUser {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SiteSetting {
+  id            String   @id @default(cuid())
+  companyName   String   @default("Nom de l'entreprise")
+  slogan        String?
+  description   String?
+  phone         String?
+  email         String?
+  address       String?
+  city          String?
+  postalCode    String?
+  country       String?  @default("France")
+  logoUrl       String?
+  heroImageUrl  String?
+  facebookUrl   String?
+  instagramUrl  String?
+  googleMapsUrl String?
+  openingHours  String?
+
+  seoTitle       String?
+  seoDescription String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Service {
+  id               String   @id @default(cuid())
+  title            String
+  slug             String   @unique
+  shortDescription String
+  description      String
+  imageUrl         String?
+  isPublished      Boolean  @default(true)
+  position         Int      @default(0)
+
+  seoTitle       String?
+  seoDescription String?
+
+  projects Project[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  city        String?
+  country     String?
+  duration    String?
+  description String
+  detailedDescription String?
+  problem     String?
+  solution    String?
+  isPublished Boolean  @default(true)
+  position    Int      @default(0)
+
+  serviceId String?
+  service   Service? @relation(fields: [serviceId], references: [id])
+
+  images ProjectImage[]
+
+  seoTitle       String?
+  seoDescription String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ProjectImage {
+  id        String           @id @default(cuid())
+  url       String
+  alt       String?
+  type      ProjectImageType @default(GENERAL)
+  position  Int              @default(0)
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+}
+
+model Testimonial {
+  id          String   @id @default(cuid())
+  clientName  String
+  city        String?
+  country     String?
+  rating      Int      @default(5)
+  message     String
+  isPublished Boolean  @default(true)
+  position    Int      @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ServiceArea {
+  id          String   @id @default(cuid())
+  city        String
+  slug        String   @unique
+  country     String?
+  description String?
+  isPublished Boolean  @default(true)
+
+  seoTitle       String?
+  seoDescription String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ContactRequest {
+  id          String   @id @default(cuid())
+  name        String
+  phone       String
+  email       String?
+  city        String?
+  country     String?
+  projectType String?
+  budget      String?
+  message     String
+  isRead      Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+}
+
+model GalleryItem {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  imageUrl    String
+  city        String?
+  isPublished Boolean  @default(true)
+  position    Int      @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
