@@ -37,4 +37,4 @@ RUN npm prune --omit=dev
 
 EXPOSE 3000
 
-CMD ["sh", "-c", "npx prisma migrate deploy && npm run db:bootstrap && if [ \"$RUN_DB_SEED_ON_START\" = \"true\" ]; then npm run db:seed; else echo 'Seed auto desactive'; fi && node server.js"]
+CMD ["sh", "-c", "echo \"[startup] RUN_DB_SEED_ON_START=$RUN_DB_SEED_ON_START\" && npx prisma migrate deploy && npm run db:bootstrap && if [ \"$RUN_DB_SEED_ON_START\" = \"true\" ] || [ \"$RUN_DB_SEED_ON_START\" = \"1\" ] || [ \"$RUN_DB_SEED_ON_START\" = \"yes\" ]; then echo '[startup] Seed lance...'; npm run db:seed; else echo '[startup] Seed auto desactive'; fi && node server.js"]
