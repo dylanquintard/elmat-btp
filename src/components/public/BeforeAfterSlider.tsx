@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { ChevronsLeftRight } from "lucide-react";
 import { useId, useRef, useState } from "react";
 
 type BeforeAfterSliderProps = {
@@ -53,13 +54,13 @@ export function BeforeAfterSlider({
         ref={frameRef}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
-        className={`relative cursor-ew-resize overflow-hidden rounded-xl border border-zinc-300 bg-zinc-200 touch-none ${compact ? "mx-auto w-[84%] aspect-[16/10.4] md:w-[76%] md:aspect-[16/10]" : "aspect-[16/10.4]"}`}
+        className={`relative cursor-ew-resize overflow-hidden rounded-xl border border-zinc-300 bg-zinc-200 touch-none ${compact ? "mx-auto w-[98%] aspect-[16/9.8] md:w-[96%] md:aspect-[16/9.2]" : "aspect-[16/10.4]"}`}
       >
         <Image
           src={afterUrl}
           alt={afterLabel ?? "Photo apres travaux"}
           fill
-          sizes={compact ? "(max-width: 768px) 84vw, 620px" : "(max-width: 768px) 96vw, 920px"}
+          sizes={compact ? "(max-width: 768px) 98vw, 1120px" : "(max-width: 768px) 96vw, 920px"}
           quality={72}
           className="object-cover"
           draggable={false}
@@ -68,7 +69,7 @@ export function BeforeAfterSlider({
           src={beforeUrl}
           alt={beforeLabel ?? "Photo avant travaux"}
           fill
-          sizes={compact ? "(max-width: 768px) 84vw, 620px" : "(max-width: 768px) 96vw, 920px"}
+          sizes={compact ? "(max-width: 768px) 98vw, 1120px" : "(max-width: 768px) 96vw, 920px"}
           quality={72}
           className="object-cover"
           style={{ clipPath }}
@@ -76,9 +77,9 @@ export function BeforeAfterSlider({
         />
 
         <div className="pointer-events-none absolute inset-y-0" style={{ left: `${value}%` }}>
-          <div className="relative h-full w-[2px] -translate-x-1/2 bg-white shadow-[0_0_12px_rgba(0,0,0,0.4)]">
-            <div className="absolute left-1/2 top-1/2 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-white bg-zinc-900/70 text-white">
-              <span className="text-xs">??</span>
+          <div className="relative h-full w-[3px] -translate-x-1/2 bg-amber-400 shadow-[0_0_16px_rgba(245,158,11,0.65)]">
+            <div className="absolute left-1/2 top-1/2 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-amber-300 bg-gradient-to-br from-amber-400 to-amber-600 shadow-[0_8px_22px_rgba(245,158,11,0.5)]">
+              <ChevronsLeftRight className="h-6 w-6 text-zinc-950" strokeWidth={2.75} aria-hidden="true" />
             </div>
           </div>
         </div>
@@ -87,16 +88,20 @@ export function BeforeAfterSlider({
         <span className="absolute right-3 top-3 rounded bg-amber-500/90 px-2 py-1 text-xs font-semibold text-zinc-900">Apres</span>
       </div>
 
-      <label htmlFor={sliderId} className="sr-only">Balayage avant apres</label>
-      <input
-        id={sliderId}
-        type="range"
-        min={0}
-        max={100}
-        value={value}
-        onChange={(e) => setValue(Number(e.target.value))}
-        className="w-full accent-amber-500"
-      />
+      {!compact ? (
+        <>
+          <label htmlFor={sliderId} className="sr-only">Balayage avant apres</label>
+          <input
+            id={sliderId}
+            type="range"
+            min={0}
+            max={100}
+            value={value}
+            onChange={(e) => setValue(Number(e.target.value))}
+            className="w-full accent-amber-500"
+          />
+        </>
+      ) : null}
 
       {showLegend ? (
         <div className="grid gap-2 text-sm text-zinc-700 md:grid-cols-2">

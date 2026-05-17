@@ -17,7 +17,9 @@ type HeaderClientProps = {
 export function HeaderClient({ companyName, logoUrl, compactLogoUrl, phoneLabel, phoneHref }: HeaderClientProps) {
   const [isCompact, setIsCompact] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const pathname = usePathname();
+  const compactView = isCompact || isMobile;
 
   useEffect(() => {
     // Always close mobile menu on route change to avoid stale overlay blocking scroll.
@@ -56,24 +58,32 @@ export function HeaderClient({ companyName, logoUrl, compactLogoUrl, phoneLabel,
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 767px)");
+    const onChange = () => setIsMobile(media.matches);
+    onChange();
+    media.addEventListener("change", onChange);
+    return () => media.removeEventListener("change", onChange);
+  }, []);
+
   return (
     <header
       className="sticky top-0 z-40 border-b backdrop-blur"
       style={{ backgroundColor: "var(--header-bg)", borderColor: "var(--header-border)" }}
     >
       <div
-        className={`mx-auto flex max-w-7xl items-center justify-between px-4 transition-all duration-200 ${isCompact ? "h-20" : "h-40"}`}
+        className={`mx-auto flex max-w-7xl items-center justify-between px-4 transition-all duration-200 ${compactView ? "h-20" : "h-40"}`}
         style={{ color: "var(--header-text)" }}
       >
         <Link
           href="/"
-          className={`relative flex shrink-0 items-center overflow-hidden gap-3 font-semibold tracking-wide transition-all duration-200 ${isCompact ? "h-16 w-[220px] md:w-[320px]" : "h-36 w-[360px] md:w-[780px]"}`}
+          className={`relative flex shrink-0 items-center overflow-hidden gap-3 font-semibold tracking-wide transition-all duration-200 ${compactView ? "h-16 w-[220px] md:w-[320px]" : "h-36 w-[360px] md:w-[780px]"}`}
         >
           {logoUrl ? (
             <>
               <span
-                className={`pointer-events-none absolute left-0 top-1/2 h-full -translate-y-1/2 overflow-hidden transition-opacity duration-200 ${isCompact ? "opacity-0" : "opacity-100"}`}
-                aria-hidden={isCompact}
+                className={`pointer-events-none absolute left-0 top-1/2 h-full -translate-y-1/2 overflow-hidden transition-opacity duration-200 ${compactView ? "opacity-0" : "opacity-100"}`}
+                aria-hidden={compactView}
               >
                 <Image
                   src={logoUrl}
@@ -87,8 +97,8 @@ export function HeaderClient({ companyName, logoUrl, compactLogoUrl, phoneLabel,
               </span>
               {compactLogoUrl ? (
                 <span
-                  className={`pointer-events-none absolute left-0 top-1/2 overflow-hidden transition-opacity duration-200 ${isCompact ? "h-[64%] -translate-y-1/2 opacity-100" : "h-[92%] -translate-y-1/2 opacity-0"}`}
-                  aria-hidden={!isCompact}
+                  className={`pointer-events-none absolute left-0 top-1/2 overflow-hidden transition-opacity duration-200 ${compactView ? "h-[64%] -translate-y-1/2 opacity-100" : "h-[92%] -translate-y-1/2 opacity-0"}`}
+                  aria-hidden={!compactView}
                 >
                   <Image
                     src={compactLogoUrl}
@@ -101,8 +111,8 @@ export function HeaderClient({ companyName, logoUrl, compactLogoUrl, phoneLabel,
                 </span>
               ) : (
                 <span
-                  className={`text-sm uppercase tracking-[0.12em] transition-opacity duration-200 ${isCompact ? "opacity-100" : "opacity-0"}`}
-                  aria-hidden={!isCompact}
+                  className={`text-sm uppercase tracking-[0.12em] transition-opacity duration-200 ${compactView ? "opacity-100" : "opacity-0"}`}
+                  aria-hidden={!compactView}
                 >
                   Accueil
                 </span>
@@ -114,7 +124,7 @@ export function HeaderClient({ companyName, logoUrl, compactLogoUrl, phoneLabel,
             </span>
           )}
         </Link>
-        <nav className={`absolute left-1/2 hidden -translate-x-1/2 items-center justify-center text-base md:flex ${isCompact ? "gap-6 lg:gap-8" : "gap-8 lg:gap-10"}`}>
+        <nav className={`absolute left-1/2 hidden -translate-x-1/2 items-center justify-center text-base md:flex ${compactView ? "gap-6 lg:gap-8" : "gap-8 lg:gap-10"}`}>
           <Link href="/services" aria-current={pathname === "/services" ? "page" : undefined}>Services</Link>
           <Link href="/realisations" aria-current={pathname === "/realisations" ? "page" : undefined}>Nos Chantiers</Link>
           <Link href="/contact" aria-current={pathname === "/contact" ? "page" : undefined}>Devis</Link>
@@ -145,7 +155,7 @@ export function HeaderClient({ companyName, logoUrl, compactLogoUrl, phoneLabel,
           role="button"
           tabIndex={0}
           className="fixed inset-0 z-30 bg-black/20 md:hidden"
-          style={{ top: isCompact ? "5rem" : "10rem" }}
+          style={{ top: compactView ? "5rem" : "10rem" }}
           onClick={() => setMobileMenuOpen(false)}
           onKeyDown={(event) => {
             if (event.key === "Enter" || event.key === " ") setMobileMenuOpen(false);

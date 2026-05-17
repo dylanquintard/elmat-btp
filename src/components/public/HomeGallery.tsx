@@ -143,7 +143,7 @@ export function HomeGallery({ items }: HomeGalleryProps) {
               <button
                 type="button"
                 onClick={goPrev}
-                className="absolute left-2 top-1/2 hidden -translate-y-1/2 rounded-full border border-white/30 bg-black/45 p-3 text-sm font-semibold text-white transition hover:bg-black/70 md:block"
+                className="absolute left-2 top-1/2 hidden -translate-y-1/2 rounded-full border-2 border-amber-300 bg-gradient-to-br from-amber-400 to-amber-600 px-4 py-3 text-2xl font-black leading-none text-zinc-950 shadow-[0_8px_22px_rgba(245,158,11,0.5)] transition hover:brightness-110 md:block"
                 aria-label="Photo precedente"
               >
                 ←
@@ -151,7 +151,7 @@ export function HomeGallery({ items }: HomeGalleryProps) {
               <button
                 type="button"
                 onClick={goNext}
-                className="absolute right-2 top-1/2 hidden -translate-y-1/2 rounded-full border border-white/30 bg-black/45 p-3 text-sm font-semibold text-white transition hover:bg-black/70 md:block"
+                className="absolute right-2 top-1/2 hidden -translate-y-1/2 rounded-full border-2 border-amber-300 bg-gradient-to-br from-amber-400 to-amber-600 px-4 py-3 text-2xl font-black leading-none text-zinc-950 shadow-[0_8px_22px_rgba(245,158,11,0.5)] transition hover:brightness-110 md:block"
                 aria-label="Photo suivante"
               >
                 →
@@ -165,18 +165,18 @@ export function HomeGallery({ items }: HomeGalleryProps) {
               <button
                 type="button"
                 onClick={goPrev}
-                className="rounded-lg border border-white/30 bg-white/10 px-4 py-2 text-sm font-medium hover:bg-white/20"
+                className="rounded-full border-2 border-amber-300 bg-gradient-to-br from-amber-400 to-amber-600 px-4 py-2 text-2xl font-black leading-none text-zinc-950 shadow-[0_8px_22px_rgba(245,158,11,0.5)] transition hover:brightness-110"
                 aria-label="Photo precedente"
               >
-                Precedent
+                ←
               </button>
               <button
                 type="button"
                 onClick={goNext}
-                className="rounded-lg border border-white/30 bg-white/10 px-4 py-2 text-sm font-medium hover:bg-white/20"
+                className="rounded-full border-2 border-amber-300 bg-gradient-to-br from-amber-400 to-amber-600 px-4 py-2 text-2xl font-black leading-none text-zinc-950 shadow-[0_8px_22px_rgba(245,158,11,0.5)] transition hover:brightness-110"
                 aria-label="Photo suivante"
               >
-                Suivant
+                →
               </button>
             </div>
           </div>
@@ -185,3 +185,5 @@ export function HomeGallery({ items }: HomeGalleryProps) {
     </section>
   );
 }
+
+
