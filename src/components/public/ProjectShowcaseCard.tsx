@@ -39,7 +39,7 @@ export function ProjectShowcaseCard({
       <p className="relative mx-auto mt-2 max-w-3xl text-center text-sm text-zinc-700">{summary}</p>
 
       {beforeUrl && afterUrl ? (
-        <div className="relative mx-auto mt-3 max-w-xl">
+        <div className="relative mx-auto mt-3 max-w-4xl">
           <BeforeAfterSlider
             beforeUrl={beforeUrl}
             afterUrl={afterUrl}
