@@ -4,7 +4,7 @@ import { getDefaultMetadata, getNapData } from "@/lib/seo";
 export async function generateMetadata() {
   return getDefaultMetadata(
     "Contact et devis maconnerie en Haute-Savoie",
-    "Demandez un devis pour vos travaux de maconnerie, renovation ou demolition en Haute-Savoie et proximite Geneve cote France.",
+    "Demandez un devis pour vos travaux de maconnerie, renovation ou demolition en Haute-Savoie (74), a proximite de Geneve.",
     { path: "/contact" }
   );
 }

@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   return getDefaultMetadata(
     service.seoTitle || `${service.title} en Haute-Savoie`,
-    service.seoDescription || `${service.title} pour particuliers et professionnels en Haute-Savoie, proximite Geneve cote France.`,
+    service.seoDescription || `${service.title} pour particuliers et professionnels en Haute-Savoie (74), a proximite de Geneve.`,
     { path: `/services/${slug}`, image: service.imageUrl ?? undefined }
   );
 }
@@ -53,7 +53,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
     name: service.title,
     description: service.description,
     serviceType: service.title,
-    areaServed: "Haute-Savoie, proximite Geneve cote France",
+    areaServed: "Haute-Savoie (74), proximite Geneve",
     image: service.imageUrl || undefined,
     url: `${base}/services/${service.slug}`,
   };

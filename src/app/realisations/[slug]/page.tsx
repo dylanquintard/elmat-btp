@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   return getDefaultMetadata(
     project.seoTitle || `${project.title} - Realisation BTP`,
-    project.seoDescription || `Decouvrez cette realisation de chantier en Haute-Savoie, proximite Geneve cote France.`,
+    project.seoDescription || `Decouvrez cette realisation de chantier en Haute-Savoie (74), a proximite de Geneve.`,
     { path: `/realisations/${slug}` }
   );
 }

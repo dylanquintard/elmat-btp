@@ -33,7 +33,7 @@ async function main() {
         companyName: "ELMAT",
         slogan: "Entreprise generale du batiment",
         description:
-          "ELMAT intervient en maconnerie, renovation et demolition pour vos chantiers en Haute-Savoie, en proximite de Geneve cote France.",
+          "ELMAT intervient en maconnerie, renovation et demolition pour vos chantiers en Haute-Savoie (74), a proximite de Geneve.",
         phone: "+33 4 50 00 00 00",
         email: "contact@elmat.fr",
         address: "Valleiry",
@@ -44,7 +44,7 @@ async function main() {
         googleMapsUrl: "https://maps.google.com",
         seoTitle: "ELMAT - Entreprise generale du batiment",
         seoDescription:
-          "ELMAT, entreprise generale du batiment : maconnerie, renovation et demolition en Haute-Savoie, proximite Geneve cote France.",
+          "ELMAT, entreprise generale du batiment : maconnerie, renovation et demolition en Haute-Savoie (74), a proximite de Geneve.",
       },
     });
   } else {
@@ -163,7 +163,7 @@ async function main() {
         ...service,
         isPublished: true,
         seoTitle: `${service.title} en Haute-Savoie`,
-        seoDescription: `${service.title} pour particuliers et professionnels en Haute-Savoie, proximite Geneve cote France.`,
+        seoDescription: `${service.title} pour particuliers et professionnels en Haute-Savoie (74), a proximite de Geneve.`,
       },
     });
     services.push({ id: s.id, slug: s.slug });

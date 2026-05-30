@@ -21,7 +21,7 @@ export async function getDefaultMetadata(title?: string, description?: string, o
     description ??
     settings?.seoDescription ??
     settings?.description ??
-    "Entreprise BTP en Haute-Savoie, proximite Geneve cote France.";
+    "Entreprise BTP en Haute-Savoie (74), a proximite de Geneve.";
   const metaImage = options?.image || settings?.heroImageUrl || settings?.logoUrl || FALLBACK_OG_IMAGE;
   const canonical = options?.path ? `${base}${options.path}` : base;
 
@@ -104,7 +104,7 @@ export async function getLocalBusinessJsonLd() {
       "Frangy",
       "La Roche-sur-Foron",
       "Neydens",
-      "Proximite Geneve cote France",
+      "Proximite Geneve (74)",
     ],
     image: s.heroImageUrl || s.logoUrl || FALLBACK_OG_IMAGE,
     url: base,

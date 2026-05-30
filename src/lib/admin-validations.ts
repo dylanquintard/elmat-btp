@@ -87,3 +87,21 @@ export const adminGalleryItemSchema = z.object({
   isPublished: z.boolean().default(true),
   position: z.number().int().default(0),
 });
+
+export const adminBlogArticleSchema = z.object({
+  title: z.string().min(2),
+  intro: z.string().min(10),
+  isPublished: z.boolean().default(true),
+  position: z.number().int().default(0),
+  seoTitle: z.string().optional().nullable(),
+  seoDescription: z.string().optional().nullable(),
+  blocks: z
+    .array(
+      z.object({
+        content: z.string().min(1),
+        imageUrl: z.string().optional().nullable(),
+        position: z.number().int().default(0),
+      })
+    )
+    .default([]),
+});

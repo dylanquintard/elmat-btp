@@ -7,7 +7,7 @@ import { getDefaultMetadata } from "@/lib/seo";
 export async function generateMetadata() {
   return getDefaultMetadata(
     "Realisations BTP en Haute-Savoie",
-    "Decouvrez nos chantiers de maconnerie et renovation en Haute-Savoie et proximite Geneve cote France : avant/apres, details d'intervention et resultats."
+    "Decouvrez nos chantiers de maconnerie et renovation en Haute-Savoie (74), a proximite de Geneve : avant/apres, details d'intervention et resultats."
   );
 }
 

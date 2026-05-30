@@ -6,7 +6,7 @@ import { getDefaultMetadata } from "@/lib/seo";
 export async function generateMetadata() {
   return getDefaultMetadata(
     "Services de maconnerie et renovation en Haute-Savoie",
-    "Maconnerie generale, renovation interieure et exterieure, demolition, dalle beton, chape, murs et travaux techniques en Haute-Savoie, proximite Geneve cote France."
+    "Maconnerie generale, renovation interieure et exterieure, demolition, dalle beton, chape, murs et travaux techniques en Haute-Savoie (74), a proximite de Geneve."
   );
 }
 

@@ -8,6 +8,7 @@ const links = [
   ["Zones", "/admin/zones-intervention"],
   ["Realisations", "/admin/realisations"],
   ["Galerie", "/admin/galerie"],
+  ["Blog", "/admin/blog"],
   ["Avis", "/admin/avis"],
   ["Demandes", "/admin/demandes"],
 ] as const;

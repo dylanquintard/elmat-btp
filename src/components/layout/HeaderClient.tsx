@@ -127,6 +127,7 @@ export function HeaderClient({ companyName, logoUrl, compactLogoUrl, phoneLabel,
         <nav className={`absolute left-1/2 hidden -translate-x-1/2 items-center justify-center text-base md:flex ${compactView ? "gap-6 lg:gap-8" : "gap-8 lg:gap-10"}`}>
           <Link href="/services" aria-current={pathname === "/services" ? "page" : undefined}>Services</Link>
           <Link href="/realisations" aria-current={pathname === "/realisations" ? "page" : undefined}>Nos Chantiers</Link>
+          <Link href="/blog" aria-current={pathname === "/blog" ? "page" : undefined}>Blog</Link>
           <Link href="/contact" aria-current={pathname === "/contact" ? "page" : undefined}>Devis</Link>
         </nav>
         <div className="flex shrink-0 items-center gap-2 md:gap-3">
@@ -171,6 +172,7 @@ export function HeaderClient({ companyName, logoUrl, compactLogoUrl, phoneLabel,
           <Link href="/" onClick={() => setMobileMenuOpen(false)} className="block rounded-lg px-3 py-2 text-sm font-medium hover:bg-white/10" aria-current={pathname === "/" ? "page" : undefined}>Accueil</Link>
           <Link href="/services" onClick={() => setMobileMenuOpen(false)} className="block rounded-lg px-3 py-2 text-sm font-medium hover:bg-white/10" aria-current={pathname === "/services" ? "page" : undefined}>Services</Link>
           <Link href="/realisations" onClick={() => setMobileMenuOpen(false)} className="block rounded-lg px-3 py-2 text-sm font-medium hover:bg-white/10" aria-current={pathname === "/realisations" ? "page" : undefined}>Nos Chantiers</Link>
+          <Link href="/blog" onClick={() => setMobileMenuOpen(false)} className="block rounded-lg px-3 py-2 text-sm font-medium hover:bg-white/10" aria-current={pathname === "/blog" ? "page" : undefined}>Blog</Link>
           <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className="block rounded-lg px-3 py-2 text-sm font-medium hover:bg-white/10" aria-current={pathname === "/contact" ? "page" : undefined}>Devis</Link>
         </nav>
       </div>

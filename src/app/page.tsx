@@ -97,8 +97,8 @@ export default async function HomePage() {
       a: "Oui, un devis est etabli apres echange sur votre projet et, si necessaire, apres visite du chantier.",
     },
     {
-      q: "Intervenez-vous autour de Geneve et en Haute-Savoie ?",
-      a: "Oui, nous intervenons en Haute-Savoie et en proximite de Geneve cote France. Pas d’intervention en Suisse pour le moment.",
+      q: "Ou intervenez-vous ?",
+      a: "Nous intervenons en Haute-Savoie (74). L'entreprise est situee a proximite de Geneve.",
     },
   ];
   const faqJsonLd = {
@@ -128,7 +128,7 @@ export default async function HomePage() {
           className="object-cover"
         />
         <div className="pointer-events-none absolute inset-0 bg-black/65" />
-        <p className="relative z-10 mb-2 text-sm text-amber-400">Haute-Savoie et proximite Geneve (France)</p>
+        <p className="relative z-10 mb-2 text-sm text-amber-400">Haute-Savoie (74), proximite Geneve</p>
         <h1 className="relative z-10 text-4xl font-bold">{settings?.companyName ?? "Entreprise BTP en Haute-Savoie"}</h1>
         <p className="relative z-10 mt-3 max-w-3xl text-zinc-200">{settings?.description ?? "Construction, renovation et amenagement pour particuliers et professionnels."}</p>
         <div className="relative z-10 mt-6 flex gap-3">
@@ -236,12 +236,9 @@ export default async function HomePage() {
       </RevealSection>
 
       <RevealSection delay={0.14}>
-        <h2 className="mb-3 text-2xl font-semibold">Intervention en Haute-Savoie et proximite Geneve (cote France)</h2>
+        <h2 className="mb-3 text-2xl font-semibold">Intervention en Haute-Savoie (74), a proximite de Geneve</h2>
         <p className="max-w-4xl text-zinc-700">
-          Nous intervenons pour vos travaux de maconnerie, renovation et demolition en Haute-Savoie, notamment a Valleiry, Viry, Saint-Julien-en-Genevois, Vers, Cruseilles, Annemasse, Annecy, Valserhone, Gex, Divonne-les-Bains, Frangy, La Roche-sur-Foron et Neydens. Pour toute demande de devis, contactez-nous afin d’echanger sur votre projet et verifier la faisabilite de l’intervention.
-        </p>
-        <p className="mt-3 max-w-4xl text-zinc-700">
-          Proximite Geneve, mais pas d’intervention en Suisse pour le moment.
+          Nous intervenons pour vos travaux de maconnerie, renovation et demolition en Haute-Savoie (74), notamment a Valleiry, Viry, Saint-Julien-en-Genevois, Vers, Cruseilles, Annemasse, Annecy, Valserhone, Gex, Divonne-les-Bains, Frangy, La Roche-sur-Foron et Neydens. Pour toute demande de devis, contactez-nous afin d’echanger sur votre projet et verifier la faisabilite de l’intervention.
         </p>
         <div className="mt-4 flex flex-wrap gap-2">
           {zones.map((z) => (
@@ -294,8 +291,8 @@ export default async function HomePage() {
             <p className="mt-2 text-sm text-zinc-700">Oui, un devis peut etre realise apres echange sur votre projet et, si necessaire, apres visite du chantier.</p>
           </details>
           <details className="rounded-xl border border-zinc-300 bg-white p-4">
-            <summary className="cursor-pointer font-semibold">Intervenez-vous autour de Geneve et en Haute-Savoie ?</summary>
-            <p className="mt-2 text-sm text-zinc-700">Oui, nous intervenons en Haute-Savoie et en proximite de Geneve cote France. Pas d’intervention en Suisse pour le moment.</p>
+            <summary className="cursor-pointer font-semibold">Ou intervenez-vous ?</summary>
+            <p className="mt-2 text-sm text-zinc-700">Nous intervenons en Haute-Savoie (74). L'entreprise est situee a proximite de Geneve.</p>
           </details>
         </div>
       </RevealSection>
