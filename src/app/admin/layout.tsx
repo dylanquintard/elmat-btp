@@ -1,5 +1,13 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { AdminLogoutButton } from "@/components/admin/AdminLogoutButton";
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 const links = [
   ["Dashboard", "/admin/dashboard"],
