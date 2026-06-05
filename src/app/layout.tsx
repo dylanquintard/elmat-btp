@@ -67,7 +67,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "(function(){try{var t=localStorage.getItem('elmat-theme');var a=localStorage.getItem('elmat-appearance');document.documentElement.setAttribute('data-theme',t||'steel');document.documentElement.setAttribute('data-appearance',a==='dark'?'dark':'light');}catch(e){document.documentElement.setAttribute('data-theme','steel');document.documentElement.setAttribute('data-appearance','light');}})();",
+              "(function(){document.documentElement.setAttribute('data-theme','slate');document.documentElement.setAttribute('data-appearance','dark');})();",
           }}
         />
         <Header />

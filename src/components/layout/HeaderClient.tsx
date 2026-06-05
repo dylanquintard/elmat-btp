@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ThemePicker } from "@/components/layout/ThemePicker";
 
 type HeaderClientProps = {
   companyName: string;
@@ -141,7 +140,6 @@ export function HeaderClient({ companyName, logoUrl, compactLogoUrl, phoneLabel,
           >
             Menu
           </button>
-          <ThemePicker />
           <a
             href={phoneHref}
             className="hidden rounded px-3 py-2 text-sm font-semibold md:inline-block"

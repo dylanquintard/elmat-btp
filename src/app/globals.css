@@ -1,60 +1,8 @@
 @import "tailwindcss";
 
-:root {
-  --background: #f4f3ef;
-  --background-alt: #fff6da;
-  --foreground: #1f2328;
-  --header-bg: rgba(9, 12, 18, 0.94);
-  --header-border: #2f3642;
-  --header-text: #f4f7fb;
-  --accent: #d4a24c;
-  --accent-text: #131a24;
-}
-
-:root[data-theme="earth"] {
-  --background: #efe9dc;
-  --background-alt: #f7f2e8;
-  --foreground: #23303c;
-  --header-bg: rgba(37, 46, 56, 0.94);
-  --header-border: #4b4a48;
-  --header-text: #f8f5ef;
-  --accent: #c1b189;
-  --accent-text: #202933;
-}
-
-:root[data-theme="slate"] {
-  --background: #e7ecef;
-  --background-alt: #dde8e7;
-  --foreground: #0f2638;
-  --header-bg: rgba(9, 44, 74, 0.94);
-  --header-border: #10564f;
-  --header-text: #eef4f7;
-  --accent: #ccb875;
-  --accent-text: #13253a;
-}
-
-:root[data-appearance="dark"] {
-  --background: #0f1318;
-  --background-alt: #1a2129;
-  --foreground: #edf2f7;
-  --header-bg: rgba(6, 8, 12, 0.94);
-  --header-border: #2f3642;
-  --header-text: #f4f7fb;
-  --accent: #d4a24c;
-  --accent-text: #131a24;
-}
-
-:root[data-appearance="dark"][data-theme="earth"] {
-  --background: #151619;
-  --background-alt: #232427;
-  --foreground: #f2eee8;
-  --header-bg: rgba(24, 25, 29, 0.94);
-  --header-border: #4b4a48;
-  --header-text: #f8f5ef;
-  --accent: #c1b189;
-  --accent-text: #1e242c;
-}
-
+:root,
+:root[data-theme="slate"],
+:root[data-appearance="dark"],
 :root[data-appearance="dark"][data-theme="slate"] {
   --background: #0d1720;
   --background-alt: #162632;
@@ -66,18 +14,9 @@
   --accent-text: #142338;
 }
 
-:root[data-appearance="dark"] {
-  --surface: #161c24;
-  --surface-soft: #1d2530;
-  --surface-border: #2b3642;
-}
-
-:root[data-appearance="dark"][data-theme="earth"] {
-  --surface: #1d1f23;
-  --surface-soft: #25282d;
-  --surface-border: #3b3a39;
-}
-
+:root,
+:root[data-theme="slate"],
+:root[data-appearance="dark"],
 :root[data-appearance="dark"][data-theme="slate"] {
   --surface: #132431;
   --surface-soft: #1a2f3f;
