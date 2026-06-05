@@ -1,12 +1,12 @@
-export const revalidate = 600;
+export const dynamic = "force-dynamic";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { prisma } from "@/lib/prisma";
+import { prisma, safeDbQuery } from "@/lib/prisma";
 import { getDefaultMetadata } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const article = await prisma.blogArticle.findUnique({ where: { slug } });
+  const article = await safeDbQuery(() => prisma.blogArticle.findUnique({ where: { slug } }), null);
 
   if (!article) {
     return getDefaultMetadata("Article blog", "Article de blog BTP.", { path: `/blog/${slug}` });
@@ -21,10 +21,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function BlogDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const article = await prisma.blogArticle.findUnique({
-    where: { slug },
-    include: { blocks: { orderBy: { position: "asc" } } },
-  });
+  const article = await safeDbQuery(
+    () =>
+      prisma.blogArticle.findUnique({
+        where: { slug },
+        include: { blocks: { orderBy: { position: "asc" } } },
+      }),
+    null
+  );
 
   if (!article || !article.isPublished) notFound();
 

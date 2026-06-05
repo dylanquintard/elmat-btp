@@ -1,14 +1,14 @@
 export const revalidate = 3600;
 import type { MetadataRoute } from "next";
-import { prisma } from "@/lib/prisma";
+import { prisma, safeDbQuery } from "@/lib/prisma";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
   const [services, projects, blogArticles] = await Promise.all([
-    prisma.service.findMany({ where: { isPublished: true }, select: { slug: true, updatedAt: true } }),
-    prisma.project.findMany({ where: { isPublished: true }, select: { slug: true, updatedAt: true } }),
-    prisma.blogArticle.findMany({ where: { isPublished: true }, select: { slug: true, updatedAt: true } }),
+    safeDbQuery(() => prisma.service.findMany({ where: { isPublished: true }, select: { slug: true, updatedAt: true } }), []),
+    safeDbQuery(() => prisma.project.findMany({ where: { isPublished: true }, select: { slug: true, updatedAt: true } }), []),
+    safeDbQuery(() => prisma.blogArticle.findMany({ where: { isPublished: true }, select: { slug: true, updatedAt: true } }), []),
   ]);
 
   return [

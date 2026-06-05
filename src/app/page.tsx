@@ -1,24 +1,28 @@
-﻿export const revalidate = 300;
+export const dynamic = "force-dynamic";
 import Link from "next/link";
 import Image from "next/image";
-import { prisma } from "@/lib/prisma";
+import { prisma, safeDbQuery } from "@/lib/prisma";
 import { getLocalBusinessJsonLd } from "@/lib/seo";
 import { HomeGallery } from "@/components/public/HomeGallery";
 import { RevealSection } from "@/components/public/RevealSection";
 
 export default async function HomePage() {
   const [settings, services, projects, testimonials, zones, galleryItems] = await Promise.all([
-    prisma.siteSetting.findFirst(),
-    prisma.service.findMany({ where: { isPublished: true }, orderBy: { position: "asc" }, take: 6 }),
-    prisma.project.findMany({ where: { isPublished: true }, orderBy: { position: "asc" }, take: 3 }),
-    prisma.testimonial.findMany({ where: { isPublished: true }, orderBy: { position: "asc" }, take: 6 }),
-    prisma.serviceArea.findMany({ where: { isPublished: true }, orderBy: { city: "asc" }, take: 12 }),
-    prisma.galleryItem.findMany({
-      where: { isPublished: true },
-      orderBy: { createdAt: "desc" },
-      take: 24,
-      select: { id: true, title: true, imageUrl: true },
-    }),
+    safeDbQuery(() => prisma.siteSetting.findFirst(), null),
+    safeDbQuery(() => prisma.service.findMany({ where: { isPublished: true }, orderBy: { position: "asc" }, take: 6 }), []),
+    safeDbQuery(() => prisma.project.findMany({ where: { isPublished: true }, orderBy: { position: "asc" }, take: 3 }), []),
+    safeDbQuery(() => prisma.testimonial.findMany({ where: { isPublished: true }, orderBy: { position: "asc" }, take: 6 }), []),
+    safeDbQuery(() => prisma.serviceArea.findMany({ where: { isPublished: true }, orderBy: { city: "asc" }, take: 12 }), []),
+    safeDbQuery(
+      () =>
+        prisma.galleryItem.findMany({
+          where: { isPublished: true },
+          orderBy: { createdAt: "desc" },
+          take: 24,
+          select: { id: true, title: true, imageUrl: true },
+        }),
+      []
+    ),
   ]);
 
   const jsonLd = await getLocalBusinessJsonLd();

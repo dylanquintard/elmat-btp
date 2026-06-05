@@ -1,5 +1,5 @@
-export const revalidate = 600;
-import { prisma } from "@/lib/prisma";
+export const dynamic = "force-dynamic";
+import { prisma, safeDbQuery } from "@/lib/prisma";
 import { ServicesDynamicGrid } from "@/components/public/ServicesDynamicGrid";
 import { getDefaultMetadata } from "@/lib/seo";
 
@@ -11,7 +11,10 @@ export async function generateMetadata() {
 }
 
 export default async function ServicesPage() {
-  const services = await prisma.service.findMany({ where: { isPublished: true }, orderBy: { position: "asc" } });
+  const services = await safeDbQuery(
+    () => prisma.service.findMany({ where: { isPublished: true }, orderBy: { position: "asc" } }),
+    []
+  );
   return (
     <div className="space-y-6">
       <header className="relative overflow-hidden rounded-2xl bg-zinc-900 p-7 text-zinc-100">

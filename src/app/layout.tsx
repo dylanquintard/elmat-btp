@@ -3,9 +3,9 @@ import { Manrope } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { prisma } from "@/lib/prisma";
+import { prisma, safeDbQuery } from "@/lib/prisma";
 
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -19,7 +19,7 @@ function toTelHref(value?: string | null) {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const s = await prisma.siteSetting.findFirst();
+  const s = await safeDbQuery(() => prisma.siteSetting.findFirst(), null);
   const title = s?.seoTitle || s?.companyName || "Entreprise BTP";
   const description =
     s?.seoDescription ||
@@ -48,7 +48,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const settings = await prisma.siteSetting.findFirst();
+  const settings = await safeDbQuery(() => prisma.siteSetting.findFirst(), null);
   const phoneHref = toTelHref(settings?.phone);
   const phoneLabel = settings?.phone?.trim() || "Appeler";
 

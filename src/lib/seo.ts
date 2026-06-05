@@ -1,5 +1,5 @@
 ﻿import { type Metadata } from "next";
-import { prisma } from "@/lib/prisma";
+import { prisma, safeDbQuery } from "@/lib/prisma";
 
 const FALLBACK_OG_IMAGE =
   "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1600&q=80";
@@ -14,7 +14,7 @@ function getBaseUrl() {
 }
 
 export async function getDefaultMetadata(title?: string, description?: string, options?: MetadataOptions): Promise<Metadata> {
-  const settings = await prisma.siteSetting.findFirst();
+  const settings = await safeDbQuery(() => prisma.siteSetting.findFirst(), null);
   const base = getBaseUrl();
   const metaTitle = title ?? settings?.seoTitle ?? settings?.companyName ?? "Entreprise BTP";
   const metaDescription =
@@ -51,7 +51,7 @@ export async function getDefaultMetadata(title?: string, description?: string, o
 }
 
 export async function getNapData() {
-  const s = await prisma.siteSetting.findFirst();
+  const s = await safeDbQuery(() => prisma.siteSetting.findFirst(), null);
   return {
     companyName: s?.companyName?.trim() || "Entreprise BTP",
     phone: s?.phone?.trim() || "+33 0 00 00 00 00",

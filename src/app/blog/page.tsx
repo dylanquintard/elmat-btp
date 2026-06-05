@@ -1,6 +1,6 @@
-export const revalidate = 600;
+export const dynamic = "force-dynamic";
 import Link from "next/link";
-import { prisma } from "@/lib/prisma";
+import { prisma, safeDbQuery } from "@/lib/prisma";
 import { getDefaultMetadata } from "@/lib/seo";
 
 export async function generateMetadata() {
@@ -11,11 +11,15 @@ export async function generateMetadata() {
 }
 
 export default async function BlogPage() {
-  const articles = await prisma.blogArticle.findMany({
-    where: { isPublished: true },
-    orderBy: [{ position: "asc" }, { createdAt: "desc" }],
-    include: { _count: { select: { blocks: true } } },
-  });
+  const articles = await safeDbQuery(
+    () =>
+      prisma.blogArticle.findMany({
+        where: { isPublished: true },
+        orderBy: [{ position: "asc" }, { createdAt: "desc" }],
+        include: { _count: { select: { blocks: true } } },
+      }),
+    []
+  );
 
   return (
     <div className="space-y-6">

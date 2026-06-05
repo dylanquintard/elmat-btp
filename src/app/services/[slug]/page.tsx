@@ -1,12 +1,12 @@
-export const revalidate = 600;
+export const dynamic = "force-dynamic";
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { prisma } from "@/lib/prisma";
+import { prisma, safeDbQuery } from "@/lib/prisma";
 import { getDefaultMetadata } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const service = await prisma.service.findUnique({ where: { slug } });
+  const service = await safeDbQuery(() => prisma.service.findUnique({ where: { slug } }), null);
 
   if (!service) {
     return getDefaultMetadata("Service BTP", "Details d'un service de maconnerie et renovation en Haute-Savoie.", {
@@ -23,17 +23,21 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function ServiceDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const service = await prisma.service.findUnique({
-    where: { slug },
-    include: {
-      projects: {
-        where: { isPublished: true },
-        orderBy: [{ position: "asc" }, { createdAt: "desc" }],
-        take: 3,
-        select: { id: true, title: true, slug: true, city: true },
-      },
-    },
-  });
+  const service = await safeDbQuery(
+    () =>
+      prisma.service.findUnique({
+        where: { slug },
+        include: {
+          projects: {
+            where: { isPublished: true },
+            orderBy: [{ position: "asc" }, { createdAt: "desc" }],
+            take: 3,
+            select: { id: true, title: true, slug: true, city: true },
+          },
+        },
+      }),
+    null
+  );
   if (!service || !service.isPublished) notFound();
   const base = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 

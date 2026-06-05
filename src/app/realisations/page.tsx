@@ -1,6 +1,6 @@
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
 import Link from "next/link";
-import { prisma } from "@/lib/prisma";
+import { prisma, safeDbQuery } from "@/lib/prisma";
 import { ProjectShowcaseCard } from "@/components/public/ProjectShowcaseCard";
 import { getDefaultMetadata } from "@/lib/seo";
 
@@ -27,39 +27,51 @@ export default async function RealisationsPage({ searchParams }: RealisationsPag
   const activeCity = params.city?.trim() || "";
   const activeService = params.service?.trim() || "";
 
-  const projects = await prisma.project.findMany({
-    where: {
-      isPublished: true,
-      city: activeCity ? { equals: activeCity, mode: "insensitive" } : undefined,
-      service: activeService
-        ? {
-            slug: activeService,
-          }
-        : undefined,
-    },
-    orderBy: { position: "asc" },
-    include: {
-      images: { orderBy: { position: "asc" } },
-      service: { select: { slug: true, title: true } },
-    },
-  });
+  const projects = await safeDbQuery(
+    () =>
+      prisma.project.findMany({
+        where: {
+          isPublished: true,
+          city: activeCity ? { equals: activeCity, mode: "insensitive" } : undefined,
+          service: activeService
+            ? {
+                slug: activeService,
+              }
+            : undefined,
+        },
+        orderBy: { position: "asc" },
+        include: {
+          images: { orderBy: { position: "asc" } },
+          service: { select: { slug: true, title: true } },
+        },
+      }),
+    []
+  );
 
   const [cities, services] = await Promise.all([
-    prisma.project.findMany({
-      where: { isPublished: true, city: { not: null } },
-      distinct: ["city"],
-      select: { city: true },
-      orderBy: { city: "asc" },
-    }),
-    prisma.project.findMany({
-      where: { isPublished: true, serviceId: { not: null } },
-      distinct: ["serviceId"],
-      select: {
-        service: {
-          select: { slug: true, title: true, isPublished: true },
-        },
-      },
-    }),
+    safeDbQuery(
+      () =>
+        prisma.project.findMany({
+          where: { isPublished: true, city: { not: null } },
+          distinct: ["city"],
+          select: { city: true },
+          orderBy: { city: "asc" },
+        }),
+      []
+    ),
+    safeDbQuery(
+      () =>
+        prisma.project.findMany({
+          where: { isPublished: true, serviceId: { not: null } },
+          distinct: ["serviceId"],
+          select: {
+            service: {
+              select: { slug: true, title: true, isPublished: true },
+            },
+          },
+        }),
+      []
+    ),
   ]);
 
   const availableServices = services

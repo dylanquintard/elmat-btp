@@ -1,14 +1,14 @@
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { prisma } from "@/lib/prisma";
+import { prisma, safeDbQuery } from "@/lib/prisma";
 import { BeforeAfterSlider } from "@/components/public/BeforeAfterSlider";
 import { getDefaultMetadata } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const project = await prisma.project.findUnique({ where: { slug } });
+  const project = await safeDbQuery(() => prisma.project.findUnique({ where: { slug } }), null);
 
   if (!project) {
     return getDefaultMetadata("Realisation BTP", "Exemple de chantier de maconnerie et renovation en Haute-Savoie.", {
@@ -32,13 +32,17 @@ function getFirstByType(
 
 export default async function RealisationDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const project = await prisma.project.findUnique({
-    where: { slug },
-    include: {
-      images: { orderBy: { position: "asc" } },
-      service: { select: { title: true, slug: true } },
-    },
-  });
+  const project = await safeDbQuery(
+    () =>
+      prisma.project.findUnique({
+        where: { slug },
+        include: {
+          images: { orderBy: { position: "asc" } },
+          service: { select: { title: true, slug: true } },
+        },
+      }),
+    null
+  );
 
   if (!project || !project.isPublished) notFound();
 

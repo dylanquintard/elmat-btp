@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { prisma, safeDbQuery } from "@/lib/prisma";
 import { HeaderClient } from "@/components/layout/HeaderClient";
 
 function toTelHref(value?: string | null) {
@@ -7,7 +7,7 @@ function toTelHref(value?: string | null) {
 }
 
 export async function Header() {
-  const settings = await prisma.siteSetting.findFirst();
+  const settings = await safeDbQuery(() => prisma.siteSetting.findFirst(), null);
   const companyName = settings?.companyName?.trim() || "Entreprise BTP";
   const logoUrl = settings?.logoUrl?.trim() || null;
   const compactLogoUrl = settings?.compactLogoUrl?.trim() || null;
