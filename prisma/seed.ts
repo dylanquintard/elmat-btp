@@ -35,7 +35,7 @@ async function main() {
         description:
           "ELMAT intervient en maconnerie, renovation et demolition pour vos chantiers en Haute-Savoie (74), a proximite de Geneve.",
         phone: "+33 4 50 00 00 00",
-        email: "contact@elmat.fr",
+        email: "contactelmat74@gmail.com",
         address: "Valleiry",
         city: "Valleiry",
         postalCode: "74520",
