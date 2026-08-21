@@ -5,8 +5,9 @@ import { getDefaultMetadata } from "@/lib/seo";
 
 export async function generateMetadata() {
   return getDefaultMetadata(
-    "Blog maconnerie et renovation en Haute-Savoie",
-    "Conseils, methodes chantier et retours terrain sur la maconnerie, la renovation et les travaux techniques en Haute-Savoie."
+    "Blog maçonnerie et rénovation en Haute-Savoie",
+    "Conseils, méthodes chantier et retours terrain sur la maçonnerie, la rénovation et les travaux techniques en Haute-Savoie.",
+    { path: "/blog" }
   );
 }
 
@@ -26,7 +27,7 @@ export default async function BlogPage() {
       <header className="relative overflow-hidden rounded-2xl bg-zinc-900 p-7 text-zinc-100">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(245,158,11,0.2),transparent_35%)]" />
         <h1 className="text-3xl font-bold">Blog</h1>
-        <p className="mt-2 text-zinc-300">Des articles pratiques pour mieux comprendre les travaux de maconnerie et renovation.</p>
+        <p className="mt-2 text-zinc-300">Des articles pratiques pour mieux comprendre les travaux de maçonnerie et rénovation.</p>
       </header>
 
       <div className="grid gap-4 md:grid-cols-2">
@@ -36,7 +37,7 @@ export default async function BlogPage() {
             <p className="mt-2 text-zinc-700">{article.intro}</p>
             <p className="mt-2 text-xs text-zinc-500">{article._count.blocks} paragraphe(s)</p>
             <Link href={`/blog/${article.slug}`} className="mt-3 inline-flex rounded bg-amber-500 px-3 py-2 text-sm font-semibold text-zinc-900 transition hover:bg-amber-400">
-              Lire l'article
+              Lire l&apos;article
             </Link>
           </article>
         ))}

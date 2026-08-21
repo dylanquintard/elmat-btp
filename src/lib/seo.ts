@@ -16,12 +16,13 @@ function getBaseUrl() {
 export async function getDefaultMetadata(title?: string, description?: string, options?: MetadataOptions): Promise<Metadata> {
   const settings = await safeDbQuery(() => prisma.siteSetting.findFirst(), null);
   const base = getBaseUrl();
-  const metaTitle = title ?? settings?.seoTitle ?? settings?.companyName ?? "Entreprise BTP";
+  const company = settings?.companyName?.trim() || "ELMAT";
+  const metaTitle = title ?? settings?.seoTitle ?? `${company} - Maçonnerie et rénovation en Haute-Savoie`;
   const metaDescription =
     description ??
     settings?.seoDescription ??
     settings?.description ??
-    "Entreprise BTP en Haute-Savoie (74), a proximite de Geneve.";
+    "Entreprise de maçonnerie, rénovation, démolition, dalle béton et chape en Haute-Savoie (74), à proximité de Genève.";
   const metaImage = options?.image || settings?.heroImageUrl || settings?.logoUrl || FALLBACK_OG_IMAGE;
   const canonical = options?.path ? `${base}${options.path}` : base;
 
@@ -38,7 +39,7 @@ export async function getDefaultMetadata(title?: string, description?: string, o
       type: "website",
       locale: "fr_FR",
       url: canonical,
-      siteName: settings?.companyName ?? "Entreprise BTP",
+      siteName: company,
       images: [{ url: metaImage }],
     },
     twitter: {
@@ -53,16 +54,16 @@ export async function getDefaultMetadata(title?: string, description?: string, o
 export async function getNapData() {
   const s = await safeDbQuery(() => prisma.siteSetting.findFirst(), null);
   return {
-    companyName: s?.companyName?.trim() || "Entreprise BTP",
+    companyName: s?.companyName?.trim() || "ELMAT",
     phone: s?.phone?.trim() || "+33 0 00 00 00 00",
-    email: s?.email?.trim() || "contact@entreprise-btp.fr",
+    email: s?.email?.trim() || "contact@elmat74.fr",
     address: s?.address?.trim() || "",
     city: s?.city?.trim() || "Valleiry",
     postalCode: s?.postalCode?.trim() || "",
     country: s?.country?.trim() || "France",
     googleMapsUrl: s?.googleMapsUrl?.trim() || "",
     openingHours: s?.openingHours?.trim() || "",
-    description: s?.description?.trim() || "Travaux de construction, renovation et amenagement.",
+    description: s?.description?.trim() || "Travaux de maçonnerie, rénovation, démolition et aménagement en Haute-Savoie.",
     heroImageUrl: s?.heroImageUrl?.trim() || "",
     logoUrl: s?.logoUrl?.trim() || "",
   };
@@ -104,9 +105,10 @@ export async function getLocalBusinessJsonLd() {
       "Frangy",
       "La Roche-sur-Foron",
       "Neydens",
-      "Proximite Geneve (74)",
+      "Proximité Genève (74)",
     ],
     image: s.heroImageUrl || s.logoUrl || FALLBACK_OG_IMAGE,
     url: base,
+    priceRange: "€€",
   };
 }

@@ -6,8 +6,9 @@ import { getDefaultMetadata } from "@/lib/seo";
 
 export async function generateMetadata() {
   return getDefaultMetadata(
-    "Realisations BTP en Haute-Savoie",
-    "Decouvrez nos chantiers de maconnerie et renovation en Haute-Savoie (74), a proximite de Geneve : avant/apres, details d'intervention et resultats."
+    "Réalisations BTP en Haute-Savoie",
+    "Découvrez nos chantiers de maçonnerie et rénovation en Haute-Savoie (74), à proximité de Genève : avant/après, détails d'intervention et résultats.",
+    { path: "/realisations" }
   );
 }
 
@@ -84,10 +85,13 @@ export default async function RealisationsPage({ searchParams }: RealisationsPag
     <div className="space-y-10">
       <header className="relative overflow-hidden rounded-2xl bg-zinc-900 p-8 text-zinc-100">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(245,158,11,0.2),transparent_35%)]" />
-        <h1 className="text-4xl font-bold">Nos chantiers & realisations</h1>
+        <h1 className="text-4xl font-bold">Nos chantiers et réalisations</h1>
         <p className="mt-3 max-w-3xl text-zinc-300">
-          Avant/apres, synthese des interventions et acces rapide vers le detail complet de chaque chantier.
+          Avant/après, synthèse des interventions et accès rapide au détail de chaque chantier.
         </p>
+        <Link href="/contact" className="mt-5 inline-flex rounded-lg bg-amber-500 px-4 py-2 font-semibold text-zinc-950">
+          Demander un devis similaire
+        </Link>
       </header>
 
       <section className="rounded-xl border bg-white p-4">
@@ -133,7 +137,7 @@ export default async function RealisationsPage({ searchParams }: RealisationsPag
       <div className="space-y-8">
         {projects.length === 0 ? (
           <div className="rounded-xl border border-dashed border-zinc-300 bg-zinc-50 p-6 text-zinc-600">
-            Aucun chantier ne correspond au filtre selectionne.
+            Aucun chantier ne correspond au filtre sélectionné.
           </div>
         ) : null}
 

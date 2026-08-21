@@ -3,8 +3,8 @@ import { getDefaultMetadata, getNapData } from "@/lib/seo";
 
 export async function generateMetadata() {
   return getDefaultMetadata(
-    "Contact et devis maconnerie en Haute-Savoie",
-    "Demandez un devis pour vos travaux de maconnerie, renovation ou demolition en Haute-Savoie (74), a proximite de Geneve.",
+    "Contact et devis maçonnerie en Haute-Savoie",
+    "Demandez un devis pour vos travaux de maçonnerie, rénovation, dalle béton, chape ou démolition en Haute-Savoie (74), à proximité de Genève.",
     { path: "/contact" }
   );
 }
@@ -26,7 +26,7 @@ export default async function ContactPage() {
         <p className="text-sm font-medium text-amber-400">Devis gratuit</p>
         <h1 className="mt-2 text-3xl font-bold md:text-4xl">Parlons de votre chantier</h1>
         <p className="mt-3 max-w-2xl text-zinc-300">
-          Decrivez votre projet et recevez un premier retour rapide avec les prochaines etapes.
+          Décrivez votre projet et recevez un premier retour clair sur les prochaines étapes.
         </p>
         <div className="mt-5 flex flex-wrap gap-3 text-sm">
           <a href={phoneHref} className="rounded-lg bg-amber-500 px-4 py-2 font-semibold text-zinc-900">
@@ -40,13 +40,13 @@ export default async function ContactPage() {
 
       <div className="grid gap-5 lg:grid-cols-[1fr_320px]">
         <ModernContactForm />
-        <aside className="space-y-3 rounded-2xl border border-zinc-200 bg-white p-5">
+        <aside className="space-y-4 rounded-2xl border border-zinc-200 bg-white p-5">
           <h2 className="text-lg font-semibold">Informations entreprise</h2>
           <div className="space-y-2 text-sm text-zinc-700">
             <p><strong>Entreprise:</strong> {nap.companyName}</p>
-            <p><strong>Telephone:</strong> {nap.phone}</p>
+            <p><strong>Téléphone:</strong> {nap.phone}</p>
             <p><strong>Email:</strong> {nap.email}</p>
-            <p><strong>Adresse:</strong> {addressParts.length ? addressParts.join(", ") : "A renseigner dans les parametres"}</p>
+            <p><strong>Adresse:</strong> {addressParts.length ? addressParts.join(", ") : "À renseigner dans les paramètres"}</p>
             {nap.openingHours ? <p><strong>Horaires:</strong> {nap.openingHours}</p> : null}
             {nap.googleMapsUrl ? (
               <p>
@@ -55,6 +55,10 @@ export default async function ContactPage() {
                 </a>
               </p>
             ) : null}
+          </div>
+          <div className="rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-zinc-800">
+            <p className="font-semibold">Pour accélérer le devis</p>
+            <p className="mt-1">Indiquez la ville, les dimensions, le type de support, le délai souhaité et si vous disposez de photos du chantier.</p>
           </div>
         </aside>
       </div>

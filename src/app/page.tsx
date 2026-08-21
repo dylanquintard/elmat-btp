@@ -1,15 +1,21 @@
 export const dynamic = "force-dynamic";
+
 import Link from "next/link";
 import Image from "next/image";
 import { prisma, safeDbQuery } from "@/lib/prisma";
-import { getLocalBusinessJsonLd } from "@/lib/seo";
+import { getLocalBusinessJsonLd, getNapData } from "@/lib/seo";
 import { HomeGallery } from "@/components/public/HomeGallery";
 import { RevealSection } from "@/components/public/RevealSection";
 
+function toTelHref(value?: string | null) {
+  const cleaned = (value ?? "").replace(/[^\d+]/g, "");
+  return cleaned ? `tel:${cleaned}` : "tel:+33000000000";
+}
+
 export default async function HomePage() {
-  const [settings, services, projects, testimonials, zones, galleryItems] = await Promise.all([
+  const [settings, nap, projects, testimonials, zones, galleryItems] = await Promise.all([
     safeDbQuery(() => prisma.siteSetting.findFirst(), null),
-    safeDbQuery(() => prisma.service.findMany({ where: { isPublished: true }, orderBy: { position: "asc" }, take: 6 }), []),
+    getNapData(),
     safeDbQuery(() => prisma.project.findMany({ where: { isPublished: true }, orderBy: { position: "asc" }, take: 3 }), []),
     safeDbQuery(() => prisma.testimonial.findMany({ where: { isPublished: true }, orderBy: { position: "asc" }, take: 6 }), []),
     safeDbQuery(() => prisma.serviceArea.findMany({ where: { isPublished: true }, orderBy: { city: "asc" }, take: 12 }), []),
@@ -29,82 +35,57 @@ export default async function HomePage() {
   const rawHeroImageUrl =
     settings?.heroImageUrl?.trim() ||
     "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1920&q=80";
-  const heroImageUrl = (() => {
-    if (!rawHeroImageUrl) return rawHeroImageUrl;
-    // Keep Next/Image strict remote config while still supporting local absolute URLs.
-    if (rawHeroImageUrl.startsWith("http://localhost:3000/uploads/")) {
-      return rawHeroImageUrl.replace("http://localhost:3000", "");
-    }
-    if (rawHeroImageUrl.startsWith("http://127.0.0.1:3000/uploads/")) {
-      return rawHeroImageUrl.replace("http://127.0.0.1:3000", "");
-    }
-    return rawHeroImageUrl;
-  })();
+  const heroImageUrl = rawHeroImageUrl
+    .replace("http://localhost:3000/uploads/", "/uploads/")
+    .replace("http://127.0.0.1:3000/uploads/", "/uploads/");
+  const phoneHref = toTelHref(nap.phone);
+
   const mainServices = [
     {
-      title: "Maconnerie generale",
-      text: "Construction, reprise, reparation et modification d’ouvrages maconnes : murs, murets, ouvertures, seuils, appuis, escaliers et petits travaux de gros oeuvre.",
+      title: "Maçonnerie générale",
+      text: "Construction, reprise et réparation d'ouvrages maçonnés : murs, murets, ouvertures, seuils, appuis, escaliers et petits travaux de gros oeuvre.",
     },
     {
-      title: "Renovation interieure et exterieure",
-      text: "Travaux de renovation pour ameliorer, transformer ou remettre en etat un batiment, une maison, un local ou une dependance.",
+      title: "Rénovation intérieure et extérieure",
+      text: "Remise en état, transformation et amélioration de maisons, locaux, dépendances et espaces extérieurs.",
     },
     {
-      title: "Demolition",
-      text: "Demolition partielle, ouverture de murs, depose d’elements existants et preparation de chantier dans le respect des contraintes du batiment.",
+      title: "Démolition et préparation",
+      text: "Démolition partielle, ouverture de murs, dépose d'éléments existants et préparation de chantier.",
     },
     {
-      title: "Dalle beton et chape",
-      text: "Realisation de dalles beton, chapes, supports propres et stables pour terrasses, garages, extensions, sols interieurs ou exterieurs.",
+      title: "Dalle béton et chape",
+      text: "Supports propres et stables pour terrasses, garages, extensions, sols intérieurs ou extérieurs.",
     },
     {
-      title: "Murs et soutenements",
-      text: "Montage de murs en parpaings, murs en blocs creux, murets, murs de cloture et murs de soutenement en beton.",
+      title: "Murs et soutènements",
+      text: "Montage de murs en parpaings, murets, murs de clôture et murs de soutènement en béton.",
     },
     {
       title: "Travaux techniques",
-      text: "Carottage, resine de sol, recherche de fuite, enduits, creation d’escaliers et interventions specifiques selon les besoins du chantier.",
+      text: "Carottage, résine de sol, enduits, recherche de fuite, escaliers béton et interventions spécifiques.",
     },
   ];
-  const technicalTags = [
-    "Maconnerie generale",
-    "Renovation interieure",
-    "Renovation exterieure",
-    "Demolition",
-    "Carottage beton",
-    "Resine de sol",
-    "Chape beton",
-    "Dalle beton",
-    "Mur en parpaings",
-    "Mur de soutenement",
-    "Creation d’ouvertures",
-    "Enduit",
-    "Escaliers beton",
-    "Recherche de fuite",
-    "Travaux de reprise et reparation",
-  ];
+
   const faqItems = [
     {
-      q: "Quels types de travaux de maconnerie realisez-vous ?",
-      a: "Nous realisons des travaux de maconnerie generale, renovation interieure et exterieure, demolition, dalle beton, chape, murs en parpaings, murs de soutenement, creation d’ouvertures, carottage, enduits, escaliers et resine de sol.",
+      q: "Quels travaux réalise ELMAT ?",
+      a: "ELMAT intervient en maçonnerie générale, rénovation intérieure et extérieure, démolition, dalle béton, chape, murs en parpaings, murs de soutènement, carottage, enduits et travaux techniques.",
     },
     {
-      q: "Realisez-vous des petits travaux de maconnerie ?",
-      a: "Oui, nous intervenons aussi pour des petits travaux comme une reprise de mur, une ouverture, un seuil, une reparation, une chape ou un enduit.",
+      q: "Intervenez-vous pour des petits travaux ?",
+      a: "Oui. Une reprise de mur, une ouverture, un seuil, une réparation, une chape ou un enduit peuvent faire l'objet d'une demande de devis.",
     },
     {
-      q: "Pouvez-vous intervenir pour une renovation complete ?",
-      a: "Oui, nous pouvons accompagner des projets de renovation interieure ou exterieure selon l’etat du batiment et les travaux necessaires.",
+      q: "Le devis est-il gratuit ?",
+      a: "Oui. Un devis est établi après échange sur le projet et, si nécessaire, après visite du chantier.",
     },
     {
-      q: "Faites-vous des devis gratuits ?",
-      a: "Oui, un devis est etabli apres echange sur votre projet et, si necessaire, apres visite du chantier.",
-    },
-    {
-      q: "Ou intervenez-vous ?",
-      a: "Nous intervenons en Haute-Savoie (74). L'entreprise est situee a proximite de Geneve.",
+      q: "Dans quelles zones intervenez-vous ?",
+      a: "ELMAT intervient en Haute-Savoie (74), notamment autour de Valleiry, Saint-Julien-en-Genevois, Annemasse, Annecy et à proximité de Genève.",
     },
   ];
+
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -120,195 +101,176 @@ export default async function HomePage() {
 
   return (
     <div className="relative space-y-12 overflow-x-clip">
-      <RevealSection
-        className="relative overflow-hidden rounded-2xl bg-zinc-900 p-8 text-zinc-100"
-      >
+      <RevealSection className="relative min-h-[580px] overflow-hidden rounded-2xl bg-zinc-950 text-zinc-100">
         <Image
           src={heroImageUrl}
-          alt={`Chantier ${settings?.companyName ?? "Entreprise BTP"}`}
+          alt={`Chantier de maçonnerie réalisé par ${nap.companyName}`}
           fill
           priority
           sizes="(max-width: 768px) 100vw, 1200px"
           className="object-cover"
         />
-        <div className="pointer-events-none absolute inset-0 bg-black/65" />
-        <p className="relative z-10 mb-2 text-sm text-amber-400">Haute-Savoie (74), proximite Geneve</p>
-        <h1 className="relative z-10 text-4xl font-bold">{settings?.companyName ?? "Entreprise BTP en Haute-Savoie"}</h1>
-        <p className="relative z-10 mt-3 max-w-3xl text-zinc-200">{settings?.description ?? "Construction, renovation et amenagement pour particuliers et professionnels."}</p>
-        <div className="relative z-10 mt-6 flex gap-3">
-          <Link href="/contact" className="rounded bg-amber-500 px-4 py-2 font-semibold text-zinc-900">Demander un devis</Link>
-          <Link href="/realisations" className="rounded border border-zinc-600 px-4 py-2">Voir nos realisations</Link>
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/85 via-black/62 to-black/20" />
+        <div className="relative z-10 flex min-h-[580px] max-w-4xl flex-col justify-center px-6 py-10 md:px-10">
+          <p className="text-sm font-semibold uppercase tracking-wide text-amber-300">
+            Maçonnerie, rénovation et démolition en Haute-Savoie
+          </p>
+          <h1 className="mt-4 text-4xl font-bold leading-tight md:text-6xl">
+            {settings?.companyName ?? "ELMAT"}, l&apos;entreprise BTP qui transforme vos travaux en chantier maîtrisé.
+          </h1>
+          <p className="mt-5 max-w-2xl text-lg text-zinc-200">
+            Un interlocuteur réactif pour vos dalles béton, murs, ouvertures, rénovations et reprises de maçonnerie autour de Valleiry, Saint-Julien-en-Genevois, Annemasse, Annecy et Genève.
+          </p>
+          <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+            <Link href="/contact" className="rounded-lg bg-amber-500 px-5 py-3 text-center font-semibold text-zinc-950 transition hover:bg-amber-400">
+              Demander un devis gratuit
+            </Link>
+            <a href={phoneHref} className="rounded-lg border border-white/50 px-5 py-3 text-center font-semibold text-white transition hover:bg-white/10">
+              Appeler {nap.phone}
+            </a>
+          </div>
+          <div className="mt-8 grid max-w-3xl gap-3 text-sm text-zinc-200 sm:grid-cols-3">
+            <p className="rounded-lg border border-white/15 bg-white/10 p-3 backdrop-blur">Devis clair après étude du besoin</p>
+            <p className="rounded-lg border border-white/15 bg-white/10 p-3 backdrop-blur">Travail soigné, propre et durable</p>
+            <p className="rounded-lg border border-white/15 bg-white/10 p-3 backdrop-blur">Intervention locale en Haute-Savoie</p>
+          </div>
         </div>
       </RevealSection>
 
-      <RevealSection delay={0.04}>
-        <h2 className="mb-3 text-2xl font-semibold">
-          Votre macon de confiance pour vos travaux de renovation et de gros oeuvre
-        </h2>
-        <p className="max-w-4xl text-zinc-700">
-          Que ce soit pour un projet de renovation, une creation d’ouverture, une dalle beton, un mur en parpaings, une demolition ou des travaux de finition, nous mettons notre savoir-faire au service de vos besoins.
-          <br />
-          <br />
-          Chaque chantier est etudie avec attention afin de proposer une solution solide, propre et durable. Nous intervenons aussi bien sur des petits travaux que sur des projets plus complets de renovation interieure ou exterieure.
-        </p>
+      <RevealSection delay={0.04} className="grid gap-4 md:grid-cols-3">
+        <article className="rounded-xl border border-zinc-300 bg-white p-5">
+          <p className="text-sm font-semibold text-amber-700">01</p>
+          <h2 className="mt-1 text-xl font-semibold">Vous expliquez le chantier</h2>
+          <p className="mt-2 text-sm text-zinc-700">Surface, ville, délai, photos éventuelles et contraintes d&apos;accès : nous qualifions rapidement votre demande.</p>
+        </article>
+        <article className="rounded-xl border border-zinc-300 bg-white p-5">
+          <p className="text-sm font-semibold text-amber-700">02</p>
+          <h2 className="mt-1 text-xl font-semibold">Nous cadrons la solution</h2>
+          <p className="mt-2 text-sm text-zinc-700">Nous vérifions les points techniques, les matériaux, la faisabilité et la meilleure méthode d&apos;intervention.</p>
+        </article>
+        <article className="rounded-xl border border-zinc-300 bg-white p-5">
+          <p className="text-sm font-semibold text-amber-700">03</p>
+          <h2 className="mt-1 text-xl font-semibold">Vous recevez un devis</h2>
+          <p className="mt-2 text-sm text-zinc-700">La proposition est claire, adaptée au chantier et pensée pour éviter les mauvaises surprises.</p>
+        </article>
       </RevealSection>
 
       <RevealSection delay={0.06}>
-        <h2 className="mb-4 text-2xl font-semibold">Nos principaux services</h2>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <div>
+            <h2 className="text-3xl font-semibold">Travaux de maçonnerie et rénovation</h2>
+            <p className="mt-2 max-w-3xl text-zinc-700">
+              ELMAT accompagne les particuliers et professionnels pour des travaux solides, propres et adaptés au bâti existant.
+            </p>
+          </div>
+          <Link href="/services" className="font-semibold text-amber-700 underline">
+            Voir tous les services
+          </Link>
+        </div>
+        <div className="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {mainServices.map((service) => (
-            <article key={service.title} className="rounded-xl border border-zinc-300 bg-white p-4">
+            <article key={service.title} className="rounded-xl border border-zinc-300 bg-white p-5">
               <h3 className="font-semibold">{service.title}</h3>
-              <p className="mt-2 text-sm text-zinc-600">{service.text}</p>
+              <p className="mt-2 text-sm text-zinc-700">{service.text}</p>
             </article>
           ))}
         </div>
-        {services.length > 0 ? (
-          <div className="mt-4">
-            <Link href="/services" className="text-sm font-semibold text-amber-700 underline">
-              Voir le detail de tous nos services
-            </Link>
-          </div>
-        ) : null}
       </RevealSection>
 
-      <RevealSection delay={0.08}>
-        <h2 className="mb-3 text-2xl font-semibold">Des prestations adaptees a chaque chantier</h2>
-        <p className="max-w-4xl text-zinc-700">
-          En complement des travaux de maconnerie traditionnelle, nous realisons egalement des interventions plus ciblees : carottage beton, creation d’ouvertures, pose de resine, realisation d’enduits, reprise de sols, recherche de fuite, escaliers, chapes et travaux de renovation sur mesure.
-          <br />
-          <br />
-          L’objectif est simple : proposer une solution fiable, propre et adaptee aux contraintes de votre batiment.
-        </p>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {technicalTags.map((tag) => (
-            <span key={tag} className="rounded-full border border-zinc-300 bg-white px-3 py-1 text-sm text-zinc-700">
-              {tag}
-            </span>
-          ))}
+      <RevealSection delay={0.08} className="rounded-2xl border border-amber-300 bg-amber-50 p-6 text-zinc-900">
+        <div className="grid gap-5 md:grid-cols-[1fr_auto] md:items-center">
+          <div>
+            <h2 className="text-2xl font-bold">Un projet à chiffrer ? Envoyez une demande aujourd&apos;hui.</h2>
+            <p className="mt-2 max-w-3xl text-zinc-700">
+              Décrivez votre besoin en quelques lignes. Pour un retour utile, indiquez la ville du chantier, le type de travaux, les dimensions approximatives et le délai souhaité.
+            </p>
+          </div>
+          <div className="flex flex-col gap-2 sm:flex-row md:flex-col">
+            <Link href="/contact" className="rounded-lg bg-zinc-950 px-5 py-3 text-center font-semibold text-white">
+              Demander un devis
+            </Link>
+            <a href={phoneHref} className="rounded-lg border border-zinc-400 px-5 py-3 text-center font-semibold text-zinc-900">
+              {nap.phone}
+            </a>
+          </div>
         </div>
       </RevealSection>
 
       <RevealSection delay={0.1}>
-        <h2 className="mb-4 text-2xl font-semibold">Un accompagnement serieux, du devis a la finition</h2>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <article className="rounded-xl border border-zinc-300 bg-white p-4">
-            <h3 className="font-semibold">Devis clair et personnalise</h3>
-            <p className="mt-2 text-sm text-zinc-600">Chaque projet est etudie selon vos besoins, votre budget et les contraintes du chantier.</p>
-          </article>
-          <article className="rounded-xl border border-zinc-300 bg-white p-4">
-            <h3 className="font-semibold">Travail propre et durable</h3>
-            <p className="mt-2 text-sm text-zinc-600">Les travaux sont realises avec soin pour garantir un resultat solide et propre dans le temps.</p>
-          </article>
-          <article className="rounded-xl border border-zinc-300 bg-white p-4">
-            <h3 className="font-semibold">Polyvalence chantier</h3>
-            <p className="mt-2 text-sm text-zinc-600">Maconnerie, renovation, demolition, beton, resine, enduit ou ouverture : un seul interlocuteur pour plusieurs besoins.</p>
-          </article>
-          <article className="rounded-xl border border-zinc-300 bg-white p-4">
-            <h3 className="font-semibold">Conseils adaptes</h3>
-            <p className="mt-2 text-sm text-zinc-600">Nous vous orientons vers les solutions les plus coherentes selon l’etat du batiment et l’objectif des travaux.</p>
-          </article>
-        </div>
-      </RevealSection>
-
-      <RevealSection delay={0.12}>
-        <h2 className="mb-3 text-2xl font-semibold">Nos realisations en maconnerie et renovation</h2>
-        <p className="mb-4 max-w-4xl text-zinc-700">
-          Decouvrez quelques exemples de chantiers realises : renovation, dalle beton, murs, ouvertures, demolition, resine de sol ou travaux exterieurs. Chaque realisation reflete notre exigence de qualite et notre attention aux details.
+        <h2 className="text-3xl font-semibold">Réalisations récentes</h2>
+        <p className="mt-2 max-w-4xl text-zinc-700">
+          Quelques exemples de chantiers : rénovation, dalle béton, murs, ouvertures, démolition, résine de sol ou travaux extérieurs.
         </p>
-        <HomeGallery items={galleryItems} />
-        <div className="mt-4 grid gap-4 md:grid-cols-3">
+        <div className="mt-5">
+          <HomeGallery items={galleryItems} />
+        </div>
+        <div className="mt-5 grid gap-4 md:grid-cols-3">
           {projects.map((p) => (
             <Link
               key={p.id}
               href={`/realisations/${p.slug}`}
-              className="group relative rounded-xl border border-zinc-300 bg-white p-4 transition duration-300 hover:-translate-y-0.5 hover:border-zinc-400 hover:shadow-[0_12px_26px_rgba(0,0,0,0.14)]"
+              className="group rounded-xl border border-zinc-300 bg-white p-5 transition duration-300 hover:-translate-y-0.5 hover:border-zinc-400 hover:shadow-[0_12px_26px_rgba(0,0,0,0.14)]"
             >
               <h3 className="font-semibold">{p.title}</h3>
-              <p className="mt-2 text-sm text-zinc-600">{p.description.slice(0, 120)}...</p>
-              <span className="mt-3 inline-block text-xs font-semibold uppercase tracking-wide text-amber-700 opacity-0 transition duration-300 group-hover:opacity-100">
+              <p className="mt-2 text-sm text-zinc-700">{p.description.slice(0, 130)}...</p>
+              <span className="mt-3 inline-block text-sm font-semibold text-amber-700 underline">
                 Voir le chantier
               </span>
             </Link>
           ))}
         </div>
-        <div className="mt-4">
-          <Link href="/realisations" className="text-sm font-semibold text-amber-700 underline">
-            Voir plus des chantiers
-          </Link>
-        </div>
       </RevealSection>
 
-      <RevealSection delay={0.14}>
-        <h2 className="mb-3 text-2xl font-semibold">Intervention en Haute-Savoie (74), a proximite de Geneve</h2>
-        <p className="max-w-4xl text-zinc-700">
-          Nous intervenons pour vos travaux de maconnerie, renovation et demolition en Haute-Savoie (74), notamment a Valleiry, Viry, Saint-Julien-en-Genevois, Vers, Cruseilles, Annemasse, Annecy, Valserhone, Gex, Divonne-les-Bains, Frangy, La Roche-sur-Foron et Neydens. Pour toute demande de devis, contactez-nous afin d’echanger sur votre projet et verifier la faisabilite de l’intervention.
-        </p>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {zones.map((z) => (
-            <span key={z.id} className="rounded-full border border-zinc-300 bg-white px-3 py-1 text-sm">
-              {z.city}
-            </span>
-          ))}
-        </div>
+      <RevealSection delay={0.12} className="grid gap-6 lg:grid-cols-[1fr_0.75fr]">
+        <section>
+          <h2 className="text-3xl font-semibold">Intervention en Haute-Savoie, à proximité de Genève</h2>
+          <p className="mt-3 max-w-4xl text-zinc-700">
+            Nous intervenons notamment à Valleiry, Viry, Saint-Julien-en-Genevois, Vers, Cruseilles, Annemasse, Annecy, Valserhône, Gex, Divonne-les-Bains, Frangy, La Roche-sur-Foron et Neydens.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {zones.map((z) => (
+              <span key={z.id} className="rounded-full border border-zinc-300 bg-white px-3 py-1 text-sm">
+                {z.city}
+              </span>
+            ))}
+          </div>
+        </section>
+        <aside className="rounded-xl border border-zinc-300 bg-white p-5">
+          <h3 className="text-xl font-semibold">Pourquoi choisir ELMAT ?</h3>
+          <ul className="mt-3 space-y-2 text-sm text-zinc-700">
+            <li>Un contact direct avec l&apos;entreprise.</li>
+            <li>Des explications claires avant intervention.</li>
+            <li>Une approche adaptée aux petits travaux comme aux chantiers plus complets.</li>
+            <li>Une présence locale en Haute-Savoie.</li>
+          </ul>
+        </aside>
       </RevealSection>
+
+      {testimonials.length > 0 ? (
+        <RevealSection delay={0.14}>
+          <h2 className="text-3xl font-semibold">Avis clients</h2>
+          <div className="mt-5 grid gap-4 md:grid-cols-2">
+            {testimonials.map((t) => (
+              <figure key={t.id} className="rounded-xl border border-zinc-300 bg-white p-5">
+                <blockquote className="text-sm text-zinc-700">&quot;{t.message}&quot;</blockquote>
+                <figcaption className="mt-3 text-sm font-semibold">
+                  {t.clientName}
+                  {t.city ? <span className="font-normal text-zinc-500"> - {t.city}</span> : null}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </RevealSection>
+      ) : null}
 
       <RevealSection delay={0.16}>
-        <h2 className="mb-4 text-2xl font-semibold">Comment se deroule votre projet ?</h2>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <article className="rounded-xl border border-zinc-300 bg-white p-4">
-            <h3 className="font-semibold">1. Prise de contact</h3>
-            <p className="mt-2 text-sm text-zinc-600">Vous nous expliquez votre besoin : renovation, demolition, dalle, chape, mur, ouverture ou autre intervention.</p>
-          </article>
-          <article className="rounded-xl border border-zinc-300 bg-white p-4">
-            <h3 className="font-semibold">2. Etude du chantier</h3>
-            <p className="mt-2 text-sm text-zinc-600">Nous analysons les contraintes techniques, l’acces, les materiaux et les finitions souhaitees.</p>
-          </article>
-          <article className="rounded-xl border border-zinc-300 bg-white p-4">
-            <h3 className="font-semibold">3. Devis personnalise</h3>
-            <p className="mt-2 text-sm text-zinc-600">Vous recevez une proposition claire, adaptee a votre projet.</p>
-          </article>
-          <article className="rounded-xl border border-zinc-300 bg-white p-4">
-            <h3 className="font-semibold">4. Realisation des travaux</h3>
-            <p className="mt-2 text-sm text-zinc-600">Les travaux sont realises avec serieux, proprete et suivi jusqu’a la finition.</p>
-          </article>
-        </div>
-      </RevealSection>
-
-      <RevealSection delay={0.18}>
-        <h2 className="mb-4 text-2xl font-semibold">FAQ</h2>
-        <div className="space-y-3">
-          <details className="rounded-xl border border-zinc-300 bg-white p-4">
-            <summary className="cursor-pointer font-semibold">Quels types de travaux de maconnerie realisez-vous ?</summary>
-            <p className="mt-2 text-sm text-zinc-700">Nous realisons des travaux de maconnerie generale, renovation interieure et exterieure, demolition, dalle beton, chape, murs en parpaings, murs de soutenement, creation d’ouvertures, carottage, enduits, escaliers et resine de sol.</p>
-          </details>
-          <details className="rounded-xl border border-zinc-300 bg-white p-4">
-            <summary className="cursor-pointer font-semibold">Realisez-vous des petits travaux de maconnerie ?</summary>
-            <p className="mt-2 text-sm text-zinc-700">Oui, nous pouvons intervenir pour des petits travaux comme une reprise de mur, une ouverture, un seuil, une reparation, une chape, un enduit ou une modification d’ouvrage existant.</p>
-          </details>
-          <details className="rounded-xl border border-zinc-300 bg-white p-4">
-            <summary className="cursor-pointer font-semibold">Pouvez-vous intervenir pour une renovation complete ?</summary>
-            <p className="mt-2 text-sm text-zinc-700">Oui, nous pouvons accompagner des projets de renovation interieure ou exterieure, selon l’etat du batiment et les travaux necessaires.</p>
-          </details>
-          <details className="rounded-xl border border-zinc-300 bg-white p-4">
-            <summary className="cursor-pointer font-semibold">Faites-vous des devis gratuits ?</summary>
-            <p className="mt-2 text-sm text-zinc-700">Oui, un devis peut etre realise apres echange sur votre projet et, si necessaire, apres visite du chantier.</p>
-          </details>
-          <details className="rounded-xl border border-zinc-300 bg-white p-4">
-            <summary className="cursor-pointer font-semibold">Ou intervenez-vous ?</summary>
-            <p className="mt-2 text-sm text-zinc-700">Nous intervenons en Haute-Savoie (74). L'entreprise est situee a proximite de Geneve.</p>
-          </details>
-        </div>
-      </RevealSection>
-
-      <RevealSection delay={0.2}>
-        <h2 className="mb-4 text-2xl font-semibold">Avis clients</h2>
-        <div className="grid gap-4 md:grid-cols-2">
-          {testimonials.map((t) => (
-            <div key={t.id} className="rounded-xl border border-zinc-300 bg-white p-4">
-              <p className="text-sm text-zinc-700">&quot;{t.message}&quot;</p>
-              <p className="mt-2 text-sm font-semibold">{t.clientName}</p>
-            </div>
+        <h2 className="text-3xl font-semibold">Questions fréquentes</h2>
+        <div className="mt-5 space-y-3">
+          {faqItems.map((item) => (
+            <details key={item.q} className="rounded-xl border border-zinc-300 bg-white p-4">
+              <summary className="cursor-pointer font-semibold">{item.q}</summary>
+              <p className="mt-2 text-sm text-zinc-700">{item.a}</p>
+            </details>
           ))}
         </div>
       </RevealSection>
@@ -318,10 +280,3 @@ export default async function HomePage() {
     </div>
   );
 }
-
-
-
-
-
-
-

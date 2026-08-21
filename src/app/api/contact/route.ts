@@ -13,7 +13,7 @@ export async function POST(req: Request) {
 
   if (!rate.allowed) {
     return NextResponse.json(
-      { message: "Trop de tentatives. Merci de reessayer dans quelques minutes." },
+      { message: "Trop de tentatives. Merci de réessayer dans quelques minutes." },
       { status: 429, headers: { "Retry-After": String(rate.retryAfterSec) } }
     );
   }
@@ -32,5 +32,5 @@ export async function POST(req: Request) {
     },
   });
 
-  return NextResponse.json({ success: true, message: "Votre demande a bien ete envoyee." });
+  return NextResponse.json({ success: true, message: "Votre demande a bien été envoyée." });
 }

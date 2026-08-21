@@ -18,22 +18,30 @@ export function ModernContactForm() {
     });
 
     const data = await res.json().catch(() => ({}));
-    setStatus(data.message ?? (res.ok ? "Demande envoyee." : "Erreur, merci de verifier vos informations."));
+    setStatus(data.message ?? (res.ok ? "Demande envoyée." : "Erreur, merci de vérifier vos informations."));
     setLoading(false);
   }
 
   return (
     <form action={onSubmit} className="space-y-4 rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm md:p-6">
+      <div>
+        <h2 className="text-xl font-semibold">Demande de devis</h2>
+        <p className="mt-1 text-sm text-zinc-600">
+          Plus votre message est précis, plus le premier retour sera utile.
+        </p>
+      </div>
       <div className="grid gap-3 md:grid-cols-2">
         <input className="w-full rounded-lg border border-zinc-300 px-3 py-3 outline-none transition focus:border-amber-500" name="name" placeholder="Nom complet *" required />
-        <input className="w-full rounded-lg border border-zinc-300 px-3 py-3 outline-none transition focus:border-amber-500" name="phone" placeholder="Telephone *" required />
+        <input className="w-full rounded-lg border border-zinc-300 px-3 py-3 outline-none transition focus:border-amber-500" name="phone" placeholder="Téléphone *" required />
         <input className="w-full rounded-lg border border-zinc-300 px-3 py-3 outline-none transition focus:border-amber-500" name="email" placeholder="Email" type="email" />
         <input className="w-full rounded-lg border border-zinc-300 px-3 py-3 outline-none transition focus:border-amber-500" name="city" placeholder="Ville du chantier" />
         <select className="w-full rounded-lg border border-zinc-300 px-3 py-3 outline-none transition focus:border-amber-500" name="projectType" defaultValue="">
           <option value="">Type de projet</option>
-          <option value="maconnerie">Maconnerie</option>
-          <option value="renovation">Renovation</option>
-          <option value="demolition">Demolition</option>
+          <option value="maconnerie">Maçonnerie</option>
+          <option value="renovation">Rénovation</option>
+          <option value="demolition">Démolition</option>
+          <option value="dalle-chape">Dalle béton / chape</option>
+          <option value="mur-soutenement">Mur / soutènement</option>
           <option value="autre">Autre</option>
         </select>
         <select className="w-full rounded-lg border border-zinc-300 px-3 py-3 outline-none transition focus:border-amber-500" name="budget" defaultValue="">
@@ -48,16 +56,16 @@ export function ModernContactForm() {
       <textarea
         className="min-h-36 w-full rounded-lg border border-zinc-300 px-3 py-3 outline-none transition focus:border-amber-500"
         name="message"
-        placeholder="Decrivez votre besoin (surface, delai, contraintes...) *"
+        placeholder="Décrivez votre besoin : type de travaux, dimensions, délai, accès, contraintes... *"
         required
         minLength={10}
       />
 
-      <div className="flex items-center gap-3">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
         <button disabled={loading} className="rounded-lg bg-zinc-900 px-5 py-3 font-semibold text-white transition hover:bg-zinc-800 disabled:opacity-60" type="submit">
-          {loading ? "Envoi..." : "Envoyer ma demande"}
+          {loading ? "Envoi en cours..." : "Envoyer ma demande de devis"}
         </button>
-        <p className="text-xs text-zinc-500">Reponse sous 24h ouvrées.</p>
+        <p className="text-xs text-zinc-500">Réponse rapide les jours ouvrés.</p>
       </div>
 
       {status ? <p className="rounded-lg bg-zinc-100 px-3 py-2 text-sm text-zinc-700">{status}</p> : null}

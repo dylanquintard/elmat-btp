@@ -9,14 +9,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const service = await safeDbQuery(() => prisma.service.findUnique({ where: { slug } }), null);
 
   if (!service) {
-    return getDefaultMetadata("Service BTP", "Details d'un service de maconnerie et renovation en Haute-Savoie.", {
+    return getDefaultMetadata("Service BTP", "Détails d'un service de maçonnerie et rénovation en Haute-Savoie.", {
       path: `/services/${slug}`,
     });
   }
 
   return getDefaultMetadata(
     service.seoTitle || `${service.title} en Haute-Savoie`,
-    service.seoDescription || `${service.title} pour particuliers et professionnels en Haute-Savoie (74), a proximite de Geneve.`,
+    service.seoDescription || `${service.title} pour particuliers et professionnels en Haute-Savoie (74), à proximité de Genève.`,
     { path: `/services/${slug}`, image: service.imageUrl ?? undefined }
   );
 }
@@ -57,7 +57,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
     name: service.title,
     description: service.description,
     serviceType: service.title,
-    areaServed: "Haute-Savoie (74), proximite Geneve",
+    areaServed: "Haute-Savoie (74), proximité Genève",
     image: service.imageUrl || undefined,
     url: `${base}/services/${service.slug}`,
   };
@@ -89,7 +89,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
             </div>
           ) : (
             <div className="rounded-xl border border-dashed bg-zinc-50 p-8 text-center text-sm text-zinc-500">
-              Image du service a renseigner dans l&apos;admin.
+              Image du service à renseigner dans l&apos;admin.
             </div>
           )}
         </div>
@@ -97,7 +97,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
 
       {service.projects.length > 0 ? (
         <section className="rounded-xl border bg-white p-4">
-          <h2 className="text-xl font-semibold">Chantiers lies a ce service</h2>
+          <h2 className="text-xl font-semibold">Chantiers liés à ce service</h2>
           <div className="mt-3 grid gap-3 md:grid-cols-3">
             {service.projects.map((project) => (
               <a key={project.id} href={`/realisations/${project.slug}`} className="rounded-lg border border-zinc-200 bg-zinc-50 p-3 transition hover:border-zinc-300">
@@ -108,6 +108,19 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
           </div>
         </section>
       ) : null}
+
+      <section className="rounded-2xl border border-amber-300 bg-amber-50 p-5 text-zinc-900">
+        <h2 className="text-xl font-semibold">Besoin de ce type d&apos;intervention ?</h2>
+        <p className="mt-2 text-sm text-zinc-700">
+          Envoyez quelques informations sur votre chantier : ville, dimensions, état actuel et délai souhaité.
+        </p>
+        <a
+          href={`/contact?service=${encodeURIComponent(service.title)}`}
+          className="mt-4 inline-flex rounded-lg bg-zinc-950 px-4 py-2 font-semibold text-white"
+        >
+          Obtenir un devis
+        </a>
+      </section>
 
       <div>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />

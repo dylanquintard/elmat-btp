@@ -47,7 +47,7 @@ export function ServicesDynamicGrid({ services }: ServicesDynamicGridProps) {
                 href={`/services/${s.slug}`}
                 className="mt-4 inline-block rounded-full border border-amber-500 px-4 py-2 text-sm font-semibold text-amber-700 transition group-hover:border-white group-hover:bg-white group-hover:text-zinc-900"
               >
-                Voir details
+                Voir le détail
               </Link>
             </div>
           </article>

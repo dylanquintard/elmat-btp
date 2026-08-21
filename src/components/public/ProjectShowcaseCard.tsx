@@ -51,7 +51,7 @@ export function ProjectShowcaseCard({
         </div>
       ) : (
         <p className="relative mt-4 rounded border border-dashed border-zinc-300 bg-zinc-50 p-4 text-sm text-zinc-600">
-          Photos avant/apres a renseigner pour ce chantier.
+          Photos avant/après à renseigner pour ce chantier.
         </p>
       )}
 
@@ -60,7 +60,7 @@ export function ProjectShowcaseCard({
           href={`/realisations/${slug}`}
           className="inline-flex rounded bg-amber-500 px-4 py-2 font-semibold text-zinc-900 transition hover:bg-amber-400"
         >
-          Voir plus d&apos;infos chantier
+          Voir le détail du chantier
         </Link>
       </div>
     </article>

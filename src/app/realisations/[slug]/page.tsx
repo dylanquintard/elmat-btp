@@ -11,14 +11,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const project = await safeDbQuery(() => prisma.project.findUnique({ where: { slug } }), null);
 
   if (!project) {
-    return getDefaultMetadata("Realisation BTP", "Exemple de chantier de maconnerie et renovation en Haute-Savoie.", {
+    return getDefaultMetadata("Réalisation BTP", "Exemple de chantier de maçonnerie et rénovation en Haute-Savoie.", {
       path: `/realisations/${slug}`,
     });
   }
 
   return getDefaultMetadata(
-    project.seoTitle || `${project.title} - Realisation BTP`,
-    project.seoDescription || `Decouvrez cette realisation de chantier en Haute-Savoie (74), a proximite de Geneve.`,
+    project.seoTitle || `${project.title} - Réalisation BTP`,
+    project.seoDescription || `Découvrez cette réalisation de chantier en Haute-Savoie (74), à proximité de Genève.`,
     { path: `/realisations/${slug}` }
   );
 }
@@ -86,7 +86,7 @@ export default async function RealisationDetailPage({ params }: { params: Promis
           <h1 className="text-3xl font-bold md:text-4xl">{project.title}</h1>
           {project.service ? (
             <p className="text-sm text-zinc-600">
-              Service associe:{" "}
+              Service associé:{" "}
               <Link href={`/services/${project.service.slug}`} className="font-semibold text-amber-700 underline">
                 {project.service.title}
               </Link>
@@ -96,32 +96,32 @@ export default async function RealisationDetailPage({ params }: { params: Promis
             <BeforeAfterSlider
               beforeUrl={before.url}
               afterUrl={after.url}
-              beforeLabel={before.alt ?? project.problem ?? "Etat avant travaux"}
-              afterLabel={after.alt ?? project.solution ?? "Resultat final apres travaux"}
+              beforeLabel={before.alt ?? project.problem ?? "État avant travaux"}
+              afterLabel={after.alt ?? project.solution ?? "Résultat final après travaux"}
             />
           ) : (
             <p className="rounded border border-dashed border-zinc-300 bg-zinc-50 p-3 text-sm text-zinc-600">
-              Photos avant/apres non disponibles pour ce chantier.
+              Photos avant/après non disponibles pour ce chantier.
             </p>
           )}
         </div>
 
         <aside className="space-y-3 rounded-xl border border-zinc-200 bg-zinc-50 p-3 md:p-4">
-          <h2 className="text-xl font-bold md:text-2xl">Details chantier</h2>
+          <h2 className="text-xl font-bold md:text-2xl">Détails chantier</h2>
           <p className="text-sm text-zinc-700 md:text-base">{project.description}</p>
           <div className="grid gap-2 text-sm">
-            <p className="rounded-lg border border-zinc-200 bg-white px-3 py-2"><strong>Lieu:</strong> {project.city ?? "Non renseigne"}</p>
-            <p className="rounded-lg border border-zinc-200 bg-white px-3 py-2"><strong>Duree:</strong> {project.duration ?? "Non renseignee"}</p>
-            <p className="rounded-lg border border-zinc-200 bg-white px-3 py-2"><strong>Probleme initial:</strong> {project.problem ?? "Non renseigne"}</p>
-            <p className="rounded-lg border border-zinc-200 bg-white px-3 py-2"><strong>Solution:</strong> {project.solution ?? "Non renseignee"}</p>
+            <p className="rounded-lg border border-zinc-200 bg-white px-3 py-2"><strong>Lieu:</strong> {project.city ?? "Non renseigné"}</p>
+            <p className="rounded-lg border border-zinc-200 bg-white px-3 py-2"><strong>Durée:</strong> {project.duration ?? "Non renseignée"}</p>
+            <p className="rounded-lg border border-zinc-200 bg-white px-3 py-2"><strong>Problème initial:</strong> {project.problem ?? "Non renseigné"}</p>
+            <p className="rounded-lg border border-zinc-200 bg-white px-3 py-2"><strong>Solution:</strong> {project.solution ?? "Non renseignée"}</p>
           </div>
         </aside>
       </section>
 
       <section className="rounded-2xl border border-zinc-200 bg-white p-4 md:p-5">
-        <h2 className="text-xl font-bold md:text-2xl">Ce qui a ete realise</h2>
+        <h2 className="text-xl font-bold md:text-2xl">Ce qui a été réalisé</h2>
         <p className="mt-2 whitespace-pre-line text-zinc-700">
-          {project.detailedDescription?.trim() || project.solution?.trim() || "Description detaillee a venir."}
+          {project.detailedDescription?.trim() || project.solution?.trim() || "Description détaillée à venir."}
         </p>
       </section>
 

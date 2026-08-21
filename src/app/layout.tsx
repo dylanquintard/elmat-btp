@@ -20,11 +20,12 @@ function toTelHref(value?: string | null) {
 
 export async function generateMetadata(): Promise<Metadata> {
   const s = await safeDbQuery(() => prisma.siteSetting.findFirst(), null);
-  const title = s?.seoTitle || s?.companyName || "Entreprise BTP";
+  const company = s?.companyName?.trim() || "ELMAT";
+  const title = s?.seoTitle || `${company} - Maçonnerie, rénovation et démolition en Haute-Savoie`;
   const description =
     s?.seoDescription ||
     s?.description ||
-    "Entreprise BTP locale pour vos travaux de maconnerie, renovation et demolition.";
+    "Entreprise de maçonnerie, rénovation, démolition, dalle béton et chape en Haute-Savoie (74), à proximité de Genève.";
   const base = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
   return {
@@ -37,7 +38,7 @@ export async function generateMetadata(): Promise<Metadata> {
       type: "website",
       locale: "fr_FR",
       url: base,
-      siteName: s?.companyName || "Entreprise BTP",
+      siteName: company,
     },
     twitter: {
       card: "summary_large_image",
