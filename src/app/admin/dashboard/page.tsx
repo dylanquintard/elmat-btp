@@ -13,10 +13,22 @@ export default async function AdminDashboardPage() {
     <div className="space-y-4">
       <h1 className="text-2xl font-bold">Dashboard</h1>
       <div className="grid gap-3 md:grid-cols-4">
-        <div className="rounded border bg-white p-3">Services: {services}</div>
-        <div className="rounded border bg-white p-3">Realisations: {projects}</div>
-        <div className="rounded border bg-white p-3">Avis: {testimonials}</div>
-        <div className="rounded border bg-white p-3">Demandes non lues: {unread}</div>
+        <div className="admin-card rounded-xl border p-4">
+          <p className="text-sm text-zinc-500">Services</p>
+          <p className="mt-2 text-3xl font-bold">{services}</p>
+        </div>
+        <div className="admin-card rounded-xl border p-4">
+          <p className="text-sm text-zinc-500">Réalisations</p>
+          <p className="mt-2 text-3xl font-bold">{projects}</p>
+        </div>
+        <div className="admin-card rounded-xl border p-4">
+          <p className="text-sm text-zinc-500">Avis</p>
+          <p className="mt-2 text-3xl font-bold">{testimonials}</p>
+        </div>
+        <div className="admin-card rounded-xl border p-4">
+          <p className="text-sm text-zinc-500">Demandes non lues</p>
+          <p className="mt-2 text-3xl font-bold">{unread}</p>
+        </div>
       </div>
     </div>
   );

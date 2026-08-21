@@ -19,9 +19,9 @@ export function AdminLogoutButton() {
       type="button"
       onClick={logout}
       disabled={loading}
-      className="rounded border px-3 py-1 text-sm hover:bg-zinc-100 disabled:opacity-60"
+      className="rounded border px-3 py-1 text-sm transition hover:bg-zinc-100 disabled:opacity-60"
     >
-      {loading ? "Deconnexion..." : "Se deconnecter"}
+      {loading ? "Déconnexion..." : "Se déconnecter"}
     </button>
   );
 }

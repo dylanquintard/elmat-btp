@@ -20,7 +20,10 @@
 :root[data-appearance="dark"][data-theme="slate"] {
   --surface: #132431;
   --surface-soft: #1a2f3f;
+  --surface-muted: #203848;
   --surface-border: #295266;
+  --danger: #fca5a5;
+  --success: #86efac;
 }
 
 body {
@@ -68,8 +71,17 @@ img {
   background-color: var(--surface-soft) !important;
 }
 
+:root[data-appearance="dark"] .bg-zinc-900,
+:root[data-appearance="dark"] .bg-zinc-950 {
+  background-color: #071c2e !important;
+}
+
 :root[data-appearance="dark"] .bg-amber-50 {
   background-color: color-mix(in srgb, var(--accent) 16%, var(--surface)) !important;
+}
+
+:root[data-appearance="dark"] .bg-amber-100 {
+  background-color: color-mix(in srgb, var(--accent) 24%, var(--surface)) !important;
 }
 
 :root[data-appearance="dark"] .border-zinc-200,
@@ -77,8 +89,17 @@ img {
   border-color: var(--surface-border) !important;
 }
 
+:root[data-appearance="dark"] .border,
+:root[data-appearance="dark"] .border-zinc-700\/20 {
+  border-color: var(--surface-border) !important;
+}
+
 :root[data-appearance="dark"] .border-amber-300 {
   border-color: color-mix(in srgb, var(--accent) 52%, var(--surface-border)) !important;
+}
+
+:root[data-appearance="dark"] .border-red-300 {
+  border-color: color-mix(in srgb, var(--danger) 56%, var(--surface-border)) !important;
 }
 
 :root[data-appearance="dark"] .text-zinc-500 {
@@ -91,6 +112,82 @@ img {
 
 :root[data-appearance="dark"] .text-zinc-700 {
   color: #e3e9f1 !important;
+}
+
+:root[data-appearance="dark"] .text-red-600,
+:root[data-appearance="dark"] .text-red-700 {
+  color: var(--danger) !important;
+}
+
+:root[data-appearance="dark"] .text-green-600,
+:root[data-appearance="dark"] .text-green-700 {
+  color: var(--success) !important;
+}
+
+:root[data-appearance="dark"] .text-amber-700 {
+  color: #efd98c !important;
+}
+
+:root[data-appearance="dark"] input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+:root[data-appearance="dark"] textarea,
+:root[data-appearance="dark"] select {
+  background-color: var(--surface-soft);
+  border-color: var(--surface-border);
+  color: var(--foreground);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+:root[data-appearance="dark"] input::placeholder,
+:root[data-appearance="dark"] textarea::placeholder {
+  color: #aebcca;
+}
+
+:root[data-appearance="dark"] input:focus,
+:root[data-appearance="dark"] textarea:focus,
+:root[data-appearance="dark"] select:focus {
+  border-color: var(--accent);
+  outline: 2px solid color-mix(in srgb, var(--accent) 34%, transparent);
+  outline-offset: 1px;
+}
+
+:root[data-appearance="dark"] input[type="checkbox"],
+:root[data-appearance="dark"] input[type="radio"] {
+  accent-color: var(--accent);
+}
+
+:root[data-appearance="dark"] button.border,
+:root[data-appearance="dark"] a.border {
+  background-color: color-mix(in srgb, var(--surface-soft) 72%, transparent);
+  color: var(--foreground);
+}
+
+:root[data-appearance="dark"] button.border:hover,
+:root[data-appearance="dark"] a.border:hover,
+:root[data-appearance="dark"] .hover\:bg-zinc-100:hover {
+  background-color: var(--surface-muted) !important;
+}
+
+:root[data-appearance="dark"] table,
+:root[data-appearance="dark"] th,
+:root[data-appearance="dark"] td {
+  border-color: var(--surface-border);
+}
+
+:root[data-appearance="dark"] .admin-shell {
+  color: var(--foreground);
+}
+
+:root[data-appearance="dark"] .admin-sidebar {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--surface) 88%, #071c2e), var(--surface));
+  border-color: var(--surface-border);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+}
+
+:root[data-appearance="dark"] .admin-card {
+  background:
+    linear-gradient(135deg, var(--surface) 0%, color-mix(in srgb, var(--surface-soft) 86%, #071c2e) 100%);
+  border-color: var(--surface-border);
 }
 
 :root[data-appearance="dark"] .project-card-surface {
