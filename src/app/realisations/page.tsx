@@ -156,7 +156,7 @@ export default async function RealisationsPage({ searchParams }: RealisationsPag
               beforeUrl={before?.url}
               afterUrl={after?.url}
               beforeLabel={before?.alt ?? p.problem ?? "Etat avant intervention"}
-              afterLabel={after?.alt ?? p.solution ?? "Resultat final apres travaux"}
+              afterLabel={after?.alt ?? p.solution ?? "Résultat final après travaux"}
             />
           );
         })}

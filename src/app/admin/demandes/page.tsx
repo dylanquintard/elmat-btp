@@ -82,7 +82,7 @@ export default function AdminDemandesPage() {
       return;
     }
 
-    setStatus("Demande supprimee");
+    setStatus("Demande supprimée");
     await load();
   }
 

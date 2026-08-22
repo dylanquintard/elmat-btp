@@ -116,7 +116,7 @@ export default function AdminServiceAreasPage() {
       return;
     }
 
-    setStatus("Zone supprimee");
+    setStatus("Zone supprimée");
     await load();
   }
 

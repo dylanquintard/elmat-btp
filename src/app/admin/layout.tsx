@@ -11,10 +11,10 @@ export const metadata: Metadata = {
 
 const links = [
   ["Dashboard", "/admin/dashboard"],
-  ["Parametres", "/admin/settings"],
+  ["Paramètres", "/admin/settings"],
   ["Services", "/admin/services"],
   ["Zones", "/admin/zones-intervention"],
-  ["Realisations", "/admin/realisations"],
+  ["Réalisations", "/admin/realisations"],
   ["Galerie", "/admin/galerie"],
   ["Blog", "/admin/blog"],
   ["Avis", "/admin/avis"],

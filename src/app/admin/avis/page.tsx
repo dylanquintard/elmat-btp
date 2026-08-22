@@ -115,7 +115,7 @@ export default function AdminAvisPage() {
       setStatus("Erreur de suppression");
       return;
     }
-    setStatus("Avis supprime");
+    setStatus("Avis supprimé");
     await load();
   }
 

@@ -58,7 +58,7 @@ export function BeforeAfterSlider({
       >
         <Image
           src={afterUrl}
-          alt={afterLabel ?? "Photo apres travaux"}
+          alt={afterLabel ?? "Photo après travaux"}
           fill
           sizes={compact ? "(max-width: 768px) 98vw, 1120px" : "(max-width: 768px) 96vw, 920px"}
           quality={72}
@@ -85,12 +85,12 @@ export function BeforeAfterSlider({
         </div>
 
         <span className="absolute left-3 top-3 rounded bg-zinc-900/75 px-2 py-1 text-xs font-semibold text-white">Avant</span>
-        <span className="absolute right-3 top-3 rounded bg-amber-500/90 px-2 py-1 text-xs font-semibold text-zinc-900">Apres</span>
+        <span className="absolute right-3 top-3 rounded bg-amber-500/90 px-2 py-1 text-xs font-semibold text-zinc-900">Après</span>
       </div>
 
       {!compact ? (
         <>
-          <label htmlFor={sliderId} className="sr-only">Balayage avant apres</label>
+          <label htmlFor={sliderId} className="sr-only">Balayage avant après</label>
           <input
             id={sliderId}
             type="range"
@@ -109,7 +109,7 @@ export function BeforeAfterSlider({
             <strong>Avant:</strong> {beforeLabel ?? "Etat initial du chantier"}
           </p>
           <p className="rounded border border-zinc-200 bg-white p-2">
-            <strong>Apres:</strong> {afterLabel ?? "Resultat apres intervention"}
+            <strong>Après:</strong> {afterLabel ?? "Résultat après intervention"}
           </p>
         </div>
       ) : null}

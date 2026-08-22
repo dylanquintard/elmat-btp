@@ -27,11 +27,18 @@ export async function generateMetadata(): Promise<Metadata> {
     s?.description ||
     "Entreprise de maçonnerie, rénovation, démolition, dalle béton et chape en Haute-Savoie (74), à proximité de Genève.";
   const base = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const image =
+    s?.heroImageUrl ||
+    s?.logoUrl ||
+    "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1600&q=80";
 
   return {
     metadataBase: new URL(base),
     title,
     description,
+    alternates: {
+      canonical: base,
+    },
     openGraph: {
       title,
       description,
@@ -39,11 +46,13 @@ export async function generateMetadata(): Promise<Metadata> {
       locale: "fr_FR",
       url: base,
       siteName: company,
+      images: [{ url: image }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      images: [image],
     },
   };
 }

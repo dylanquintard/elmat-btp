@@ -145,14 +145,14 @@ export default function AdminBlogPage() {
       setStatus("Erreur de suppression");
       return;
     }
-    setStatus("Article supprime");
+    setStatus("Article supprimé");
     await load();
   }
 
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold">Blog</h1>
-      <p className="text-sm text-zinc-600">Ajoutez des articles SEO avec une introduction et autant de paragraphes que necessaire.</p>
+      <p className="text-sm text-zinc-600">Ajoutez des articles SEO avec une introduction et autant de paragraphes que nécessaire.</p>
 
       <form onSubmit={submit} className="grid gap-3 rounded-xl border bg-white p-4 md:grid-cols-2">
         <input
@@ -243,7 +243,7 @@ export default function AdminBlogPage() {
             <div>
               <p className="font-semibold">{article.title} <span className="text-xs text-zinc-500">/{article.slug}</span></p>
               <p className="mt-1 line-clamp-2 text-sm text-zinc-600">{article.intro}</p>
-              <p className="text-xs text-zinc-500">{article.blocks.length} paragraphe(s) | {article.isPublished ? "publie" : "brouillon"}</p>
+              <p className="text-xs text-zinc-500">{article.blocks.length} paragraphe(s) | {article.isPublished ? "publié" : "brouillon"}</p>
             </div>
             <div className="flex gap-2">
               <button className="rounded border px-3 py-1 text-sm" onClick={() => startEdit(article)}>Editer</button>

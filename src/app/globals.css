@@ -77,11 +77,11 @@ img {
 }
 
 :root[data-appearance="dark"] .bg-amber-50 {
-  background-color: color-mix(in srgb, var(--accent) 16%, var(--surface)) !important;
+  background-color: #f2e4b4 !important;
 }
 
 :root[data-appearance="dark"] .bg-amber-100 {
-  background-color: color-mix(in srgb, var(--accent) 24%, var(--surface)) !important;
+  background-color: #ead588 !important;
 }
 
 :root[data-appearance="dark"] .border-zinc-200,
@@ -114,6 +114,23 @@ img {
   color: #e3e9f1 !important;
 }
 
+:root[data-appearance="dark"] .text-zinc-800,
+:root[data-appearance="dark"] .text-zinc-900,
+:root[data-appearance="dark"] .text-zinc-950 {
+  color: #f3f6fb !important;
+}
+
+:root[data-appearance="dark"] .bg-amber-400.text-zinc-900,
+:root[data-appearance="dark"] .bg-amber-400.text-zinc-950,
+:root[data-appearance="dark"] .bg-amber-500.text-zinc-900,
+:root[data-appearance="dark"] .bg-amber-500.text-zinc-950,
+:root[data-appearance="dark"] .from-amber-400.text-zinc-950,
+:root[data-appearance="dark"] .from-amber-400 .text-zinc-950,
+:root[data-appearance="dark"] .bg-amber-500 .text-zinc-900,
+:root[data-appearance="dark"] .bg-amber-500 .text-zinc-950 {
+  color: var(--accent-text) !important;
+}
+
 :root[data-appearance="dark"] .text-red-600,
 :root[data-appearance="dark"] .text-red-700 {
   color: var(--danger) !important;
@@ -126,6 +143,33 @@ img {
 
 :root[data-appearance="dark"] .text-amber-700 {
   color: #efd98c !important;
+}
+
+:root[data-appearance="dark"] .bg-amber-50 .text-amber-700,
+:root[data-appearance="dark"] .bg-amber-100 .text-amber-700 {
+  color: #6f4b00 !important;
+}
+
+:root[data-appearance="dark"] .bg-amber-50 .text-zinc-500,
+:root[data-appearance="dark"] .bg-amber-50 .text-zinc-600,
+:root[data-appearance="dark"] .bg-amber-50 .text-zinc-700,
+:root[data-appearance="dark"] .bg-amber-50 .text-zinc-800,
+:root[data-appearance="dark"] .bg-amber-50 .text-zinc-900,
+:root[data-appearance="dark"] .bg-amber-100 .text-zinc-500,
+:root[data-appearance="dark"] .bg-amber-100 .text-zinc-600,
+:root[data-appearance="dark"] .bg-amber-100 .text-zinc-700,
+:root[data-appearance="dark"] .bg-amber-100 .text-zinc-800,
+:root[data-appearance="dark"] .bg-amber-100 .text-zinc-900 {
+  color: #142338 !important;
+}
+
+:root[data-appearance="dark"] .bg-amber-50 a.border,
+:root[data-appearance="dark"] .bg-amber-100 a.border,
+:root[data-appearance="dark"] .bg-amber-50 button.border,
+:root[data-appearance="dark"] .bg-amber-100 button.border {
+  background-color: rgba(255, 255, 255, 0.38);
+  border-color: rgba(20, 35, 56, 0.32) !important;
+  color: #142338;
 }
 
 :root[data-appearance="dark"] input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),

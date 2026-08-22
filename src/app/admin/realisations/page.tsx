@@ -151,13 +151,13 @@ export default function AdminRealisationsPage() {
     const data = await res.json();
     setOrphanFiles(data.orphanFiles ?? []);
     const count = apply ? data.deletedFiles.length : data.orphanFiles.length;
-    setCleanupStatus(apply ? `${count} fichier(s) supprime(s)` : `${count} fichier(s) orphelin(s) detecte(s)`);
+    setCleanupStatus(apply ? `${count} fichier(s) supprimé(s)` : `${count} fichier(s) orphelin(s) détecté(s)`);
     setCleanupLoading(false);
   }
 
   async function confirmAndCleanup() {
     if (orphanFiles.length === 0) {
-      setCleanupStatus("Aucun fichier orphelin a supprimer.");
+      setCleanupStatus("Aucun fichier orphelin à supprimer.");
       return;
     }
 
@@ -186,7 +186,7 @@ export default function AdminRealisationsPage() {
     const hasBefore = filteredImages.some((img) => img.type === "BEFORE");
     const hasAfter = filteredImages.some((img) => img.type === "AFTER");
     if (form.isPublished && (!hasBefore || !hasAfter)) {
-      setStatus("Ajoutez au minimum 1 photo BEFORE et 1 photo AFTER pour le rendu avant/apres.");
+      setStatus("Ajoutez au minimum 1 photo BEFORE et 1 photo AFTER pour le rendu avant/après.");
       return;
     }
 
@@ -246,7 +246,7 @@ export default function AdminRealisationsPage() {
   }
 
   async function remove(id: string) {
-    if (!confirm("Supprimer cette realisation ?")) return;
+    if (!confirm("Supprimer cette réalisation ?")) return;
     const res = await fetch(`/api/admin/projects/${id}`, { method: "DELETE" });
     if (res.status === 401) {
       router.push("/admin/login?reason=session-expired");
@@ -256,13 +256,13 @@ export default function AdminRealisationsPage() {
       setStatus("Erreur de suppression");
       return;
     }
-    setStatus("Realisation supprimee");
+    setStatus("Réalisation supprimée");
     await load();
   }
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Realisations</h1>
+      <h1 className="text-2xl font-bold">Réalisations</h1>
       <p className="text-sm text-zinc-600">
         Les images ajoutees ici alimentent automatiquement la galerie publique des chantiers.
       </p>
@@ -272,7 +272,7 @@ export default function AdminRealisationsPage() {
         <input className="rounded border p-2" placeholder="Position" type="number" value={form.position} onChange={(e) => setForm((s) => ({ ...s, position: Number(e.target.value) }))} />
         <input className="rounded border p-2" placeholder="Ville" value={form.city ?? ""} onChange={(e) => setForm((s) => ({ ...s, city: e.target.value }))} />
         <input className="rounded border p-2" placeholder="Pays" value={form.country ?? ""} onChange={(e) => setForm((s) => ({ ...s, country: e.target.value }))} />
-        <input className="rounded border p-2" placeholder="Duree" value={form.duration ?? ""} onChange={(e) => setForm((s) => ({ ...s, duration: e.target.value }))} />
+        <input className="rounded border p-2" placeholder="Durée" value={form.duration ?? ""} onChange={(e) => setForm((s) => ({ ...s, duration: e.target.value }))} />
         <select className="rounded border p-2" value={form.serviceId ?? ""} onChange={(e) => setForm((s) => ({ ...s, serviceId: e.target.value }))}>
           <option value="">Sans service</option>
           {services.map((s) => (
@@ -280,9 +280,9 @@ export default function AdminRealisationsPage() {
           ))}
         </select>
         <textarea className="rounded border p-2 md:col-span-2" placeholder="Description courte (liste des chantiers)" rows={3} value={form.description} onChange={(e) => setForm((s) => ({ ...s, description: e.target.value }))} required />
-        <textarea className="rounded border p-2 md:col-span-2" placeholder="Description detaillee (page chantier)" rows={6} value={form.detailedDescription ?? ""} onChange={(e) => setForm((s) => ({ ...s, detailedDescription: e.target.value }))} />
-        <textarea className="rounded border p-2" placeholder="Probleme initial" rows={3} value={form.problem ?? ""} onChange={(e) => setForm((s) => ({ ...s, problem: e.target.value }))} />
-        <textarea className="rounded border p-2" placeholder="Solution apportee" rows={3} value={form.solution ?? ""} onChange={(e) => setForm((s) => ({ ...s, solution: e.target.value }))} />
+        <textarea className="rounded border p-2 md:col-span-2" placeholder="Description détaillée (page chantier)" rows={6} value={form.detailedDescription ?? ""} onChange={(e) => setForm((s) => ({ ...s, detailedDescription: e.target.value }))} />
+        <textarea className="rounded border p-2" placeholder="Problème initial" rows={3} value={form.problem ?? ""} onChange={(e) => setForm((s) => ({ ...s, problem: e.target.value }))} />
+        <textarea className="rounded border p-2" placeholder="Solution apportée" rows={3} value={form.solution ?? ""} onChange={(e) => setForm((s) => ({ ...s, solution: e.target.value }))} />
 
         <div className="space-y-3 md:col-span-2 rounded border border-zinc-200 p-3">
           <div className="flex items-center justify-between">
@@ -301,7 +301,7 @@ export default function AdminRealisationsPage() {
                 className="rounded border border-red-300 px-3 py-1 text-sm text-red-700 disabled:opacity-60"
                 onClick={confirmAndCleanup}
                 disabled={cleanupLoading || orphanFiles.length === 0}
-                title={orphanFiles.length === 0 ? "Lancer d'abord une analyse" : "Supprimer les orphelins detectes"}
+                title={orphanFiles.length === 0 ? "Lancer d'abord une analyse" : "Supprimer les orphelins détectés"}
               >
                 Nettoyer orphelins
               </button>
@@ -311,7 +311,7 @@ export default function AdminRealisationsPage() {
           {cleanupStatus ? <p className="text-sm text-zinc-600">{cleanupStatus}</p> : null}
           {orphanFiles.length > 0 ? (
             <div className="rounded border border-amber-200 bg-amber-50 p-2">
-              <p className="text-sm font-medium text-amber-800">Fichiers orphelins detectes ({orphanFiles.length})</p>
+              <p className="text-sm font-medium text-amber-800">Fichiers orphelins détectés ({orphanFiles.length})</p>
               <ul className="mt-2 max-h-28 space-y-1 overflow-auto text-xs text-amber-900">
                 {orphanFiles.map((file) => (
                   <li key={file} className="font-mono">{file}</li>
@@ -396,7 +396,7 @@ export default function AdminRealisationsPage() {
               <div>
               <p className="font-semibold">{p.title} <span className="text-xs text-zinc-500">/{p.slug}</span></p>
               <p className="text-sm text-zinc-600">{p.city ?? "-"} - {(p.images?.length ?? 0)} image(s)</p>
-              <p className="text-xs text-zinc-500">{p.detailedDescription ? "Description detaillee: oui" : "Description detaillee: non"}</p>
+              <p className="text-xs text-zinc-500">{p.detailedDescription ? "Description détaillée: oui" : "Description détaillée: non"}</p>
               </div>
             </div>
             <div className="flex gap-2">

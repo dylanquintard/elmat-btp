@@ -110,14 +110,14 @@ export default function AdminGaleriePage() {
       setStatus("Erreur de suppression");
       return;
     }
-    setStatus("Photo supprimee");
+    setStatus("Photo supprimée");
     await load();
   }
 
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold">Galerie (independante)</h1>
-      <p className="text-sm text-zinc-600">Cette galerie est separee des fiches chantier et apparait sur la page d&apos;accueil.</p>
+      <p className="text-sm text-zinc-600">Cette galerie est séparée des fiches chantier et apparaît sur la page d&apos;accueil.</p>
 
       <form onSubmit={submit} className="grid gap-3 rounded-xl border bg-white p-4 md:grid-cols-2">
         <input className="rounded border p-2" placeholder="Titre photo" value={form.title} onChange={(e) => setForm((s) => ({ ...s, title: e.target.value }))} required />
@@ -143,7 +143,7 @@ export default function AdminGaleriePage() {
               <Image src={item.imageUrl} alt={item.title} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
             </div>
             <p className="font-semibold">{item.title}</p>
-            <p className="text-sm text-zinc-600">pos {item.position} | {item.isPublished ? "publie" : "brouillon"}</p>
+            <p className="text-sm text-zinc-600">pos {item.position} | {item.isPublished ? "publié" : "brouillon"}</p>
             <div className="mt-2 flex gap-2">
               <button className="rounded border px-3 py-1 text-sm" onClick={() => startEdit(item)}>Editer</button>
               <button className="rounded border border-red-300 px-3 py-1 text-sm text-red-700" onClick={() => remove(item.id)}>Supprimer</button>
