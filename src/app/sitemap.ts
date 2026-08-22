@@ -1,4 +1,4 @@
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 import type { MetadataRoute } from "next";
 import { prisma, safeDbQuery } from "@/lib/prisma";
 
