@@ -202,6 +202,38 @@ img {
   color: #f3f6fb !important;
 }
 
+:root[data-appearance="dark"] a.bg-amber-400:hover,
+:root[data-appearance="dark"] a.bg-amber-500:hover,
+:root[data-appearance="dark"] button.bg-amber-400:hover,
+:root[data-appearance="dark"] button.bg-amber-500:hover,
+:root[data-appearance="dark"] a.hover\:bg-amber-400:hover,
+:root[data-appearance="dark"] a.hover\:bg-amber-500:hover,
+:root[data-appearance="dark"] button.hover\:bg-amber-400:hover,
+:root[data-appearance="dark"] button.hover\:bg-amber-500:hover,
+:root[data-appearance="dark"] .bg-amber-50 a.bg-amber-400:hover,
+:root[data-appearance="dark"] .bg-amber-50 a.bg-amber-500:hover,
+:root[data-appearance="dark"] .bg-amber-50 button.bg-amber-400:hover,
+:root[data-appearance="dark"] .bg-amber-50 button.bg-amber-500:hover,
+:root[data-appearance="dark"] .bg-amber-100 a.bg-amber-400:hover,
+:root[data-appearance="dark"] .bg-amber-100 a.bg-amber-500:hover,
+:root[data-appearance="dark"] .bg-amber-100 button.bg-amber-400:hover,
+:root[data-appearance="dark"] .bg-amber-100 button.bg-amber-500:hover {
+  background-color: #071c2e !important;
+  border-color: #071c2e !important;
+  color: #f3f6fb !important;
+}
+
+:root[data-appearance="dark"] a.bg-amber-400:hover *,
+:root[data-appearance="dark"] a.bg-amber-500:hover *,
+:root[data-appearance="dark"] button.bg-amber-400:hover *,
+:root[data-appearance="dark"] button.bg-amber-500:hover *,
+:root[data-appearance="dark"] a.hover\:bg-amber-400:hover *,
+:root[data-appearance="dark"] a.hover\:bg-amber-500:hover *,
+:root[data-appearance="dark"] button.hover\:bg-amber-400:hover *,
+:root[data-appearance="dark"] button.hover\:bg-amber-500:hover * {
+  color: #f3f6fb !important;
+}
+
 :root[data-appearance="dark"] input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
 :root[data-appearance="dark"] textarea,
 :root[data-appearance="dark"] select {
