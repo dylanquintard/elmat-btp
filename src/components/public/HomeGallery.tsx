@@ -53,12 +53,9 @@ export function HomeGallery({ items }: HomeGalleryProps) {
       if (event.key === "ArrowRight") goNext();
     };
 
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onKeyDown);
 
     return () => {
-      document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onKeyDown);
     };
   }, [activeIndex, close, goNext, goPrev]);
@@ -106,7 +103,7 @@ export function HomeGallery({ items }: HomeGalleryProps) {
 
       {activeItem ? (
         <div
-          className="fixed inset-0 z-[120] bg-black/85 p-3 backdrop-blur-sm sm:p-5"
+          className="fixed inset-0 z-[120] overflow-y-auto bg-black/85 p-3 backdrop-blur-sm sm:p-5"
           role="dialog"
           aria-modal="true"
           aria-label="Galerie photo"
@@ -114,7 +111,7 @@ export function HomeGallery({ items }: HomeGalleryProps) {
             if (event.target === event.currentTarget) close();
           }}
         >
-          <div className="mx-auto flex h-full max-w-6xl flex-col">
+          <div className="mx-auto flex h-[calc(100dvh-1.5rem)] max-w-6xl flex-col sm:h-[calc(100dvh-2.5rem)]">
             <div className="mb-3 flex shrink-0 items-center justify-between gap-3 rounded-xl border border-white/10 bg-zinc-950/95 px-3 py-2 text-white shadow-[0_16px_40px_rgba(0,0,0,0.35)]">
               <div className="min-w-0">
                 <p className="truncate text-sm font-semibold md:text-base">{activeItem.title}</p>
