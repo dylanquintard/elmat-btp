@@ -131,6 +131,11 @@ img {
   color: var(--accent-text) !important;
 }
 
+:root[data-appearance="dark"] .bg-amber-400,
+:root[data-appearance="dark"] .bg-amber-500 {
+  color: var(--accent-text) !important;
+}
+
 :root[data-appearance="dark"] .text-red-600,
 :root[data-appearance="dark"] .text-red-700 {
   color: var(--danger) !important;
@@ -148,6 +153,13 @@ img {
 :root[data-appearance="dark"] .bg-amber-50 .text-amber-700,
 :root[data-appearance="dark"] .bg-amber-100 .text-amber-700 {
   color: #6f4b00 !important;
+}
+
+:root[data-appearance="dark"] .bg-amber-50,
+:root[data-appearance="dark"] .bg-amber-50 *,
+:root[data-appearance="dark"] .bg-amber-100,
+:root[data-appearance="dark"] .bg-amber-100 * {
+  color: #142338 !important;
 }
 
 :root[data-appearance="dark"] .bg-amber-50 .text-zinc-500,
@@ -170,6 +182,24 @@ img {
   background-color: rgba(255, 255, 255, 0.38);
   border-color: rgba(20, 35, 56, 0.32) !important;
   color: #142338;
+}
+
+:root[data-appearance="dark"] .bg-amber-50 .bg-zinc-900,
+:root[data-appearance="dark"] .bg-amber-50 .bg-zinc-950,
+:root[data-appearance="dark"] .bg-amber-100 .bg-zinc-900,
+:root[data-appearance="dark"] .bg-amber-100 .bg-zinc-950 {
+  background-color: #071c2e !important;
+}
+
+:root[data-appearance="dark"] .bg-amber-50 .bg-zinc-900,
+:root[data-appearance="dark"] .bg-amber-50 .bg-zinc-900 *,
+:root[data-appearance="dark"] .bg-amber-50 .bg-zinc-950,
+:root[data-appearance="dark"] .bg-amber-50 .bg-zinc-950 *,
+:root[data-appearance="dark"] .bg-amber-100 .bg-zinc-900,
+:root[data-appearance="dark"] .bg-amber-100 .bg-zinc-900 *,
+:root[data-appearance="dark"] .bg-amber-100 .bg-zinc-950,
+:root[data-appearance="dark"] .bg-amber-100 .bg-zinc-950 * {
+  color: #f3f6fb !important;
 }
 
 :root[data-appearance="dark"] input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
