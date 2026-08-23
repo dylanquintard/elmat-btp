@@ -100,7 +100,9 @@ export default async function RealisationsPage({ searchParams }: RealisationsPag
           <Link
             href="/realisations"
             className={`rounded border px-3 py-1 text-sm ${
-              !activeCity && !activeService ? "border-zinc-900 bg-zinc-900 text-white" : ""
+              !activeCity && !activeService
+                ? "border-zinc-900 bg-zinc-900 text-white"
+                : "border-amber-400 bg-amber-400 text-zinc-950 transition hover:border-zinc-950 hover:bg-zinc-950 hover:text-white"
             }`}
           >
             Tout
@@ -111,7 +113,9 @@ export default async function RealisationsPage({ searchParams }: RealisationsPag
                 key={c.city}
                 href={`/realisations?city=${encodeURIComponent(c.city)}`}
                 className={`rounded border px-3 py-1 text-sm ${
-                  activeCity.toLowerCase() === c.city.toLowerCase() ? "border-zinc-900 bg-zinc-900 text-white" : ""
+                  activeCity.toLowerCase() === c.city.toLowerCase()
+                    ? "border-zinc-900 bg-zinc-900 text-white"
+                    : "border-amber-400 bg-amber-400 text-zinc-950 transition hover:border-zinc-950 hover:bg-zinc-950 hover:text-white"
                 }`}
               >
                 {c.city}
@@ -125,7 +129,7 @@ export default async function RealisationsPage({ searchParams }: RealisationsPag
               className={`rounded border px-3 py-1 text-sm ${
                 activeService.toLowerCase() === s.slug.toLowerCase()
                   ? "border-zinc-900 bg-zinc-900 text-white"
-                  : "border-amber-300 bg-amber-50"
+                  : "border-amber-400 bg-amber-400 text-zinc-950 transition hover:border-zinc-950 hover:bg-zinc-950 hover:text-white"
               }`}
             >
               {s.title}

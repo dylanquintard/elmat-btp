@@ -125,7 +125,7 @@ export default async function HomePage() {
             <Link href="/contact" className="rounded-lg bg-amber-500 px-5 py-3 text-center font-semibold text-zinc-950 transition hover:bg-amber-400">
               Demander un devis gratuit
             </Link>
-            <a href={phoneHref} className="rounded-lg border border-white/50 px-5 py-3 text-center font-semibold text-white transition hover:bg-white/10">
+            <a href={phoneHref} className="rounded-lg border border-amber-500 bg-amber-500 px-5 py-3 text-center font-semibold text-zinc-950 transition hover:border-zinc-950 hover:bg-zinc-950 hover:text-white">
               Appeler {nap.phone}
             </a>
           </div>
@@ -189,7 +189,7 @@ export default async function HomePage() {
             <Link href="/contact" className="rounded-lg bg-zinc-950 px-5 py-3 text-center font-semibold text-white">
               Demander un devis
             </Link>
-            <a href={phoneHref} className="rounded-lg border border-zinc-400 px-5 py-3 text-center font-semibold text-zinc-900">
+            <a href={phoneHref} className="rounded-lg border border-amber-500 bg-amber-500 px-5 py-3 text-center font-semibold text-zinc-950 transition hover:border-zinc-950 hover:bg-zinc-950 hover:text-white">
               {nap.phone}
             </a>
           </div>
