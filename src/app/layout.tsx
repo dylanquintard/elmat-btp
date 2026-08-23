@@ -63,7 +63,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const phoneLabel = settings?.phone?.trim() || "Appeler";
 
   return (
-    <html lang="fr" className={manrope.variable}>
+    <html lang="fr" className={manrope.variable} data-theme="slate" data-appearance="dark">
       <head>
         <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="" />
       </head>
