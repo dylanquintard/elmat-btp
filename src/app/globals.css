@@ -285,6 +285,13 @@ img {
   color: #f3f6fb !important;
 }
 
+:root[data-appearance="dark"] .bg-amber-50 .cta-amber:hover,
+:root[data-appearance="dark"] .bg-amber-100 .cta-amber:hover {
+  background-color: #071c2e !important;
+  border-color: #071c2e !important;
+  color: #f3f6fb !important;
+}
+
 .filter-chip {
   background-color: #fbbf24 !important;
   border-color: #fbbf24 !important;
