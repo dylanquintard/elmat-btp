@@ -45,7 +45,7 @@ export function ServicesDynamicGrid({ services }: ServicesDynamicGridProps) {
               <p className="mt-2 text-sm text-zinc-700 transition group-hover:text-zinc-100">{s.shortDescription}</p>
               <Link
                 href={`/services/${s.slug}`}
-                className="mt-4 inline-block rounded-full border border-amber-500 px-4 py-2 text-sm font-semibold text-amber-700 transition group-hover:border-white group-hover:bg-white group-hover:text-zinc-900"
+                className="mt-4 inline-block rounded-full border border-amber-500 px-4 py-2 text-sm font-semibold text-amber-700 transition group-hover:border-white/45 group-hover:bg-white/15 group-hover:text-white"
               >
                 Voir le détail
               </Link>
