@@ -24,7 +24,7 @@ export default async function ServicesPage() {
         <p className="mt-2 max-w-3xl text-zinc-300">
           Des prestations concrètes pour vos chantiers en Haute-Savoie : dalle béton, chape, ouverture, mur, démolition, reprise de maçonnerie ou rénovation complète.
         </p>
-        <a href="/contact" className="mt-5 inline-flex rounded-lg bg-amber-500 px-4 py-2 font-semibold text-zinc-950">
+        <a href="/contact" className="cta-amber mt-5 inline-flex rounded-lg border px-4 py-2 font-semibold transition">
           Demander un devis
         </a>
       </header>

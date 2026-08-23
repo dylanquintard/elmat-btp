@@ -36,7 +36,7 @@ export default async function BlogPage() {
             <h2 className="text-xl font-semibold">{article.title}</h2>
             <p className="mt-2 text-zinc-700">{article.intro}</p>
             <p className="mt-2 text-xs text-zinc-500">{article._count.blocks} paragraphe(s)</p>
-            <Link href={`/blog/${article.slug}`} className="mt-3 inline-flex rounded bg-amber-500 px-3 py-2 text-sm font-semibold text-zinc-900 transition hover:bg-amber-400">
+            <Link href={`/blog/${article.slug}`} className="cta-amber mt-3 inline-flex rounded border px-3 py-2 text-sm font-semibold transition">
               Lire l&apos;article
             </Link>
           </article>

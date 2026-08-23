@@ -81,8 +81,7 @@ export default async function RealisationsPage({ searchParams }: RealisationsPag
     .filter((service) => service.isPublished)
     .sort((a, b) => a.title.localeCompare(b.title, "fr"));
   const activeFilterClass = "border-zinc-900 bg-zinc-900 text-white";
-  const inactiveFilterClass =
-    "border-[#fbbf24] bg-[#fbbf24] text-[#071c2e] transition hover:border-[#071c2e] hover:bg-[#071c2e] hover:text-[#f3f6fb]";
+  const inactiveFilterClass = "filter-chip transition";
 
   return (
     <div className="space-y-10">
@@ -92,7 +91,7 @@ export default async function RealisationsPage({ searchParams }: RealisationsPag
         <p className="mt-3 max-w-3xl text-zinc-300">
           Avant/après, synthèse des interventions et accès rapide au détail de chaque chantier.
         </p>
-        <Link href="/contact" className="mt-5 inline-flex rounded-lg bg-amber-500 px-4 py-2 font-semibold text-zinc-950">
+        <Link href="/contact" className="cta-amber mt-5 inline-flex rounded-lg border px-4 py-2 font-semibold transition">
           Demander un devis similaire
         </Link>
       </header>

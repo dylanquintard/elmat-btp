@@ -29,7 +29,7 @@ export default async function ContactPage() {
           Décrivez votre projet et recevez un premier retour clair sur les prochaines étapes.
         </p>
         <div className="mt-5 flex flex-wrap gap-3 text-sm">
-          <a href={phoneHref} className="rounded-lg bg-amber-500 px-4 py-2 font-semibold text-zinc-900">
+          <a href={phoneHref} className="cta-amber rounded-lg border px-4 py-2 font-semibold transition">
             {nap.phone}
           </a>
           <a href={`mailto:${nap.email}`} className="rounded-lg border border-zinc-600 px-4 py-2">

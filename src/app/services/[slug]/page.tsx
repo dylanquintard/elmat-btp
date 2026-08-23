@@ -70,7 +70,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
           <p className="text-zinc-700">{service.description}</p>
           <a
             href={`/contact?service=${encodeURIComponent(service.title)}`}
-            className="inline-flex rounded bg-amber-500 px-4 py-2 font-semibold text-zinc-900 transition hover:bg-amber-400"
+            className="cta-amber inline-flex rounded border px-4 py-2 font-semibold transition"
           >
             Demander un devis pour ce service
           </a>

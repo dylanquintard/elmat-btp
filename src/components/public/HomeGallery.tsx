@@ -122,7 +122,7 @@ export function HomeGallery({ items }: HomeGalleryProps) {
               <button
                 type="button"
                 onClick={close}
-                className="inline-flex size-11 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white transition hover:border-amber-300 hover:bg-amber-400 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300"
+                className="inline-flex size-11 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white transition hover:border-[#fbbf24] hover:bg-[#fbbf24] hover:text-[#071c2e] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300"
                 aria-label="Fermer la galerie"
                 title="Fermer"
               >
@@ -228,7 +228,7 @@ function ModalNavButton({ direction, onClick }: { direction: "prev" | "next"; on
     <button
       type="button"
       onClick={onClick}
-      className={`absolute top-1/2 inline-flex size-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-zinc-950/80 text-white shadow-[0_12px_30px_rgba(0,0,0,0.35)] transition hover:border-amber-300 hover:bg-amber-400 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 sm:size-14 ${
+      className={`absolute top-1/2 inline-flex size-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-zinc-950/80 text-white shadow-[0_12px_30px_rgba(0,0,0,0.35)] transition hover:border-[#fbbf24] hover:bg-[#fbbf24] hover:text-[#071c2e] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 sm:size-14 ${
         isPrev ? "left-2 sm:left-4" : "right-2 sm:right-4"
       }`}
       aria-label={label}

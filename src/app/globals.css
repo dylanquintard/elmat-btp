@@ -261,16 +261,40 @@ img {
   accent-color: var(--accent);
 }
 
-:root[data-appearance="dark"] button.border,
-:root[data-appearance="dark"] a.border {
+:root[data-appearance="dark"] button.border:not([class*="bg-"]):not(.cta-amber):not(.filter-chip),
+:root[data-appearance="dark"] a.border:not([class*="bg-"]):not(.cta-amber):not(.filter-chip) {
   background-color: color-mix(in srgb, var(--surface-soft) 72%, transparent);
   color: var(--foreground);
 }
 
-:root[data-appearance="dark"] button.border:hover,
-:root[data-appearance="dark"] a.border:hover,
+:root[data-appearance="dark"] button.border:not([class*="hover:bg-"]):not(.cta-amber):not(.filter-chip):hover,
+:root[data-appearance="dark"] a.border:not([class*="hover:bg-"]):not(.cta-amber):not(.filter-chip):hover,
 :root[data-appearance="dark"] .hover\:bg-zinc-100:hover {
   background-color: var(--surface-muted) !important;
+}
+
+.cta-amber {
+  background-color: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: var(--accent-text) !important;
+}
+
+.cta-amber:hover {
+  background-color: #071c2e !important;
+  border-color: #071c2e !important;
+  color: #f3f6fb !important;
+}
+
+.filter-chip {
+  background-color: #fbbf24 !important;
+  border-color: #fbbf24 !important;
+  color: #071c2e !important;
+}
+
+.filter-chip:hover {
+  background-color: #071c2e !important;
+  border-color: #071c2e !important;
+  color: #f3f6fb !important;
 }
 
 :root[data-appearance="dark"] table,

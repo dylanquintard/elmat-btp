@@ -58,7 +58,7 @@ export function ProjectShowcaseCard({
       <div className="relative mt-4 flex justify-center">
         <Link
           href={`/realisations/${slug}`}
-          className="inline-flex rounded bg-amber-500 px-4 py-2 font-semibold text-zinc-900 transition hover:bg-amber-400"
+          className="cta-amber inline-flex rounded border px-4 py-2 font-semibold transition"
         >
           Voir le détail du chantier
         </Link>

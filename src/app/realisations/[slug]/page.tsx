@@ -148,7 +148,7 @@ export default async function RealisationDetailPage({ params }: { params: Promis
         </section>
       ) : null}
 
-      <Link href={`/contact?chantier=${encodeURIComponent(project.title)}`} className="inline-block rounded bg-amber-500 px-4 py-2 font-semibold text-zinc-900 transition hover:bg-amber-400">
+      <Link href={`/contact?chantier=${encodeURIComponent(project.title)}`} className="cta-amber inline-block rounded border px-4 py-2 font-semibold transition">
         Demander un devis pour un chantier similaire
       </Link>
 

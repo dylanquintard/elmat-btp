@@ -122,7 +122,7 @@ export default async function HomePage() {
             Un professionnel réactif pour vos dalles béton, murs, ouvertures, rénovations et reprises de maçonnerie en Haute-Savoie autour de Valleiry, Saint-Julien-en-Genevois, Annemasse, Annecy et Genève.
           </p>
           <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-            <Link href="/contact" className="rounded-lg bg-amber-500 px-5 py-3 text-center font-semibold text-zinc-950 transition hover:bg-amber-400">
+            <Link href="/contact" className="cta-amber rounded-lg border px-5 py-3 text-center font-semibold transition">
               Demander un devis gratuit
             </Link>
             <a href={phoneHref} className="rounded-lg border border-white/50 px-5 py-3 text-center font-semibold text-white transition hover:bg-white/10">
@@ -189,7 +189,7 @@ export default async function HomePage() {
             <Link href="/contact" className="rounded-lg bg-zinc-950 px-5 py-3 text-center font-semibold text-white">
               Demander un devis
             </Link>
-            <a href={phoneHref} className="rounded-lg border border-amber-500 bg-amber-500 px-5 py-3 text-center font-semibold text-zinc-950 transition hover:border-zinc-950 hover:bg-zinc-950 hover:text-white">
+            <a href={phoneHref} className="cta-amber rounded-lg border px-5 py-3 text-center font-semibold transition">
               {nap.phone}
             </a>
           </div>
