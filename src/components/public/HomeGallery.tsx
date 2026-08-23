@@ -1,7 +1,8 @@
 "use client";
 
+import { ChevronLeft, ChevronRight, Maximize2, X } from "lucide-react";
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 type GalleryItem = {
   id: string;
@@ -14,28 +15,37 @@ type HomeGalleryProps = {
 };
 
 export function HomeGallery({ items }: HomeGalleryProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  const activeItem = useMemo(() => {
+    if (activeIndex === null) return null;
+    return items[activeIndex] ?? null;
+  }, [activeIndex, items]);
 
   const openAt = useCallback((index: number) => {
     setActiveIndex(index);
-    setIsOpen(true);
   }, []);
 
   const close = useCallback(() => {
-    setIsOpen(false);
+    setActiveIndex(null);
   }, []);
 
   const goPrev = useCallback(() => {
-    setActiveIndex((prev) => (prev - 1 + items.length) % items.length);
+    setActiveIndex((current) => {
+      if (current === null || items.length === 0) return current;
+      return (current - 1 + items.length) % items.length;
+    });
   }, [items.length]);
 
   const goNext = useCallback(() => {
-    setActiveIndex((prev) => (prev + 1) % items.length);
+    setActiveIndex((current) => {
+      if (current === null || items.length === 0) return current;
+      return (current + 1) % items.length;
+    });
   }, [items.length]);
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (activeIndex === null) return;
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") close();
@@ -43,142 +53,123 @@ export function HomeGallery({ items }: HomeGalleryProps) {
       if (event.key === "ArrowRight") goNext();
     };
 
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [close, goNext, goPrev, isOpen]);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [activeIndex, close, goNext, goPrev]);
 
   if (items.length === 0) return null;
 
   const main = items[0];
-  const second = items[1];
-  const third = items[2];
-  const moreCount = Math.max(items.length - 3, 0);
+  const sideItems = items.slice(1, 5);
+  const hiddenCount = Math.max(items.length - 5, 0);
+  const activeDisplayIndex = activeIndex === null ? 0 : activeIndex + 1;
 
   return (
-    <section className="space-y-4 rounded-2xl border border-zinc-200 bg-white p-4 md:p-5">
-      <div className="flex items-end justify-between gap-3">
-        <div>
-          <h2 className="text-2xl font-semibold">Galerie</h2>
+    <section className="space-y-4 rounded-2xl border border-zinc-800 bg-zinc-950 p-4 text-white shadow-[0_20px_60px_rgba(0,0,0,0.22)] md:p-5">
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div className="min-w-0">
+          <h2 className="text-2xl font-semibold text-white">Galerie</h2>
+          <p className="mt-1 text-sm text-zinc-300">Quelques realisations ELMAT en Haute-Savoie.</p>
+        </div>
+        <span className="rounded-full border border-amber-300/45 bg-amber-400 px-3 py-1 text-xs font-bold uppercase tracking-wide text-zinc-950">
+          {items.length} photo{items.length > 1 ? "s" : ""}
+        </span>
+      </div>
+
+      <div className="grid gap-3 lg:grid-cols-[1.45fr_1fr]">
+        <GalleryTile item={main} index={0} priority size="large" onOpen={openAt} />
+
+        <div className="grid grid-cols-2 gap-3">
+          {sideItems.map((item, index) => {
+            const itemIndex = index + 1;
+            const showMore = hiddenCount > 0 && itemIndex === 4;
+
+            return (
+              <GalleryTile
+                key={item.id}
+                item={item}
+                index={itemIndex}
+                size="small"
+                moreLabel={showMore ? `+${hiddenCount} photos` : undefined}
+                onOpen={openAt}
+              />
+            );
+          })}
         </div>
       </div>
 
-      <div className="grid gap-2 md:grid-cols-[1.8fr_1fr]">
-        <button
-          type="button"
-          onClick={() => openAt(0)}
-          className="group relative cursor-pointer overflow-hidden rounded-xl border border-zinc-200 text-left transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(0,0,0,0.22)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
-          aria-label={`Ouvrir la photo: ${main.title}`}
+      {activeItem ? (
+        <div
+          className="fixed inset-0 z-[120] bg-black/85 p-3 backdrop-blur-sm sm:p-5"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Galerie photo"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) close();
+          }}
         >
-          <div className="relative aspect-[5/4] md:aspect-[16/11]">
-            <Image src={main.imageUrl} alt={main.title} fill sizes="(max-width: 768px) 100vw, 66vw" className="pointer-events-none select-none object-cover transition duration-500 group-hover:scale-[1.03]" />
-          </div>
-          <span className="pointer-events-none absolute right-2 top-2 rounded-full bg-black/60 px-2 py-0.5 text-[11px] font-semibold text-white opacity-100 transition duration-300 md:opacity-0 md:group-hover:opacity-100">Ouvrir</span>
-          <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-3 py-2 text-sm font-semibold text-white">
-            {main.title}
-          </span>
-        </button>
-
-        <div className="grid grid-cols-2 gap-2 md:grid-cols-1">
-          {second ? (
-            <button
-              type="button"
-              onClick={() => openAt(1)}
-              className="group relative cursor-pointer overflow-hidden rounded-xl border border-zinc-200 text-left transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(0,0,0,0.22)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
-              aria-label={`Ouvrir la photo: ${second.title}`}
-            >
-              <div className="relative aspect-[5/4] md:aspect-[16/11]">
-                <Image src={second.imageUrl} alt={second.title} fill sizes="(max-width: 768px) 100vw, 33vw" className="pointer-events-none select-none object-cover transition duration-500 group-hover:scale-[1.03]" />
+          <div className="mx-auto flex h-full max-w-6xl flex-col">
+            <div className="mb-3 flex shrink-0 items-center justify-between gap-3 rounded-xl border border-white/10 bg-zinc-950/95 px-3 py-2 text-white shadow-[0_16px_40px_rgba(0,0,0,0.35)]">
+              <div className="min-w-0">
+                <p className="truncate text-sm font-semibold md:text-base">{activeItem.title}</p>
+                <p className="text-xs text-zinc-300">
+                  Photo {activeDisplayIndex} sur {items.length}
+                </p>
               </div>
-              <span className="pointer-events-none absolute right-2 top-2 rounded-full bg-black/60 px-2 py-0.5 text-[11px] font-semibold text-white opacity-100 transition duration-300 md:opacity-0 md:group-hover:opacity-100">Ouvrir</span>
-              <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-2 py-1 text-xs font-medium text-white">
-                {second.title}
-              </span>
-            </button>
-          ) : null}
-
-          {third ? (
-            <button
-              type="button"
-              onClick={() => openAt(2)}
-              className="group relative cursor-pointer overflow-hidden rounded-xl border border-zinc-200 text-left transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(0,0,0,0.22)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
-              aria-label={`Ouvrir la photo: ${third.title}`}
-            >
-              <div className="relative aspect-[5/4] md:aspect-[16/11]">
-                <Image src={third.imageUrl} alt={third.title} fill sizes="(max-width: 768px) 100vw, 33vw" className="pointer-events-none select-none object-cover transition duration-500 group-hover:scale-[1.03]" />
-              </div>
-              <div className="absolute inset-0 flex items-center justify-center bg-black/35">
-                <span className="rounded-full border border-white/70 bg-black/35 px-3 py-1 text-xs font-semibold text-white">
-                  {moreCount > 0 ? `+${moreCount} photos` : "Galerie"}
-                </span>
-              </div>
-            </button>
-          ) : null}
-        </div>
-      </div>
-
-      {isOpen ? (
-        <div className="fixed inset-0 z-50 bg-black/90 p-3 md:p-6" role="dialog" aria-modal="true" aria-label="Galerie photo">
-          <div className="absolute inset-0" onClick={close} aria-hidden="true" />
-          <div className="relative z-10 mx-auto flex h-full w-full max-w-6xl flex-col justify-center">
-            <button
-              type="button"
-              onClick={close}
-              className="absolute right-0 top-0 z-20 rounded-full border border-white/35 bg-black/45 p-2 text-xs font-semibold uppercase tracking-wide text-white transition hover:bg-black/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-              aria-label="Fermer la galerie"
-            >
-              X
-            </button>
-            <div className="relative mx-auto w-full overflow-hidden rounded-2xl border border-white/25 bg-black shadow-[0_24px_60px_rgba(0,0,0,0.45)]">
-              <div className="relative aspect-[5/4] max-h-[68vh] w-full md:aspect-[16/11]">
-                <Image
-                  src={items[activeIndex].imageUrl}
-                  alt={items[activeIndex].title}
-                  fill
-                  sizes="100vw"
-                  className="pointer-events-none select-none object-cover"
-                  priority
-                />
-              </div>
-
               <button
                 type="button"
-                onClick={goPrev}
-                className="absolute left-2 top-1/2 hidden -translate-y-1/2 rounded-full border-2 border-amber-300 bg-gradient-to-br from-amber-400 to-amber-600 px-4 py-3 text-2xl font-black leading-none text-zinc-950 shadow-[0_8px_22px_rgba(245,158,11,0.5)] transition hover:brightness-110 md:block"
-                aria-label="Photo precedente"
+                onClick={close}
+                className="inline-flex size-11 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white transition hover:border-amber-300 hover:bg-amber-400 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300"
+                aria-label="Fermer la galerie"
+                title="Fermer"
               >
-                ←
-              </button>
-              <button
-                type="button"
-                onClick={goNext}
-                className="absolute right-2 top-1/2 hidden -translate-y-1/2 rounded-full border-2 border-amber-300 bg-gradient-to-br from-amber-400 to-amber-600 px-4 py-3 text-2xl font-black leading-none text-zinc-950 shadow-[0_8px_22px_rgba(245,158,11,0.5)] transition hover:brightness-110 md:block"
-                aria-label="Photo suivante"
-              >
-                →
-              </button>
-
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/45 to-transparent px-4 pb-4 pt-12">
-                <p className="truncate text-center text-sm font-semibold text-white md:text-base">{items[activeIndex].title}</p>
-              </div>
-            </div>
-            <div className="mt-3 flex items-center justify-between gap-2 text-white md:hidden">
-              <button
-                type="button"
-                onClick={goPrev}
-                className="rounded-full border-2 border-amber-300 bg-gradient-to-br from-amber-400 to-amber-600 px-4 py-2 text-2xl font-black leading-none text-zinc-950 shadow-[0_8px_22px_rgba(245,158,11,0.5)] transition hover:brightness-110"
-                aria-label="Photo precedente"
-              >
-                ←
-              </button>
-              <button
-                type="button"
-                onClick={goNext}
-                className="rounded-full border-2 border-amber-300 bg-gradient-to-br from-amber-400 to-amber-600 px-4 py-2 text-2xl font-black leading-none text-zinc-950 shadow-[0_8px_22px_rgba(245,158,11,0.5)] transition hover:brightness-110"
-                aria-label="Photo suivante"
-              >
-                →
+                <X className="size-5" aria-hidden="true" />
               </button>
             </div>
+
+            <div className="relative min-h-0 flex-1 overflow-hidden rounded-2xl border border-white/10 bg-zinc-950 shadow-[0_24px_70px_rgba(0,0,0,0.5)]">
+              <Image
+                src={activeItem.imageUrl}
+                alt={activeItem.title}
+                fill
+                sizes="100vw"
+                className="select-none object-contain"
+                priority
+              />
+
+              {items.length > 1 ? (
+                <>
+                  <ModalNavButton direction="prev" onClick={goPrev} />
+                  <ModalNavButton direction="next" onClick={goNext} />
+                </>
+              ) : null}
+            </div>
+
+            {items.length > 1 ? (
+              <div className="mt-3 flex shrink-0 gap-2 overflow-x-auto pb-1">
+                {items.map((item, index) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => openAt(index)}
+                    className={`relative h-16 w-24 shrink-0 overflow-hidden rounded-lg border transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 sm:h-20 sm:w-32 ${
+                      index === activeIndex
+                        ? "border-amber-300 ring-2 ring-amber-300/55"
+                        : "border-white/15 opacity-75 hover:border-white/45 hover:opacity-100"
+                    }`}
+                    aria-label={`Afficher la photo: ${item.title}`}
+                  >
+                    <Image src={item.imageUrl} alt="" fill sizes="128px" className="object-cover" />
+                  </button>
+                ))}
+              </div>
+            ) : null}
           </div>
         </div>
       ) : null}
@@ -186,4 +177,67 @@ export function HomeGallery({ items }: HomeGalleryProps) {
   );
 }
 
+function GalleryTile({
+  item,
+  index,
+  priority = false,
+  size,
+  moreLabel,
+  onOpen,
+}: {
+  item: GalleryItem;
+  index: number;
+  priority?: boolean;
+  size: "large" | "small";
+  moreLabel?: string;
+  onOpen: (index: number) => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={() => onOpen(index)}
+      className="group relative cursor-pointer overflow-hidden rounded-xl border border-white/10 bg-zinc-900 text-left transition duration-300 hover:-translate-y-0.5 hover:border-amber-300/70 hover:shadow-[0_16px_34px_rgba(0,0,0,0.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300"
+      aria-label={`Ouvrir la photo: ${item.title}`}
+    >
+      <div className={`relative ${size === "large" ? "aspect-[4/3] sm:aspect-[16/10]" : "aspect-[4/3]"}`}>
+        <Image
+          src={item.imageUrl}
+          alt={item.title}
+          fill
+          sizes={size === "large" ? "(max-width: 1024px) 100vw, 58vw" : "(max-width: 1024px) 50vw, 22vw"}
+          className="pointer-events-none select-none object-cover transition duration-500 group-hover:scale-[1.035]"
+          priority={priority}
+        />
+      </div>
 
+      <span className="pointer-events-none absolute right-2 top-2 inline-flex items-center gap-1 rounded-full border border-white/20 bg-zinc-950/80 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-white transition group-hover:border-amber-300 group-hover:bg-amber-400 group-hover:text-zinc-950">
+        <Maximize2 className="size-3.5" aria-hidden="true" />
+        Voir
+      </span>
+
+      <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/55 to-transparent px-3 pb-3 pt-12">
+        <span className="block truncate text-sm font-semibold text-white">{moreLabel ?? item.title}</span>
+      </span>
+    </button>
+  );
+}
+
+function ModalNavButton({ direction, onClick }: { direction: "prev" | "next"; onClick: () => void }) {
+  const isPrev = direction === "prev";
+  const Icon = isPrev ? ChevronLeft : ChevronRight;
+  const label = isPrev ? "Photo precedente" : "Photo suivante";
+
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`absolute top-1/2 inline-flex size-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-zinc-950/80 text-white shadow-[0_12px_30px_rgba(0,0,0,0.35)] transition hover:border-amber-300 hover:bg-amber-400 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 sm:size-14 ${
+        isPrev ? "left-2 sm:left-4" : "right-2 sm:right-4"
+      }`}
+      aria-label={label}
+      title={label}
+    >
+      <Icon className="size-6" aria-hidden="true" />
+    </button>
+  );
+}
