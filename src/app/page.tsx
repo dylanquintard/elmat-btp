@@ -116,10 +116,10 @@ export default async function HomePage() {
             Maçonnerie, rénovation et démolition en Haute-Savoie
           </p>
           <h1 className="mt-4 text-4xl font-bold leading-tight md:text-6xl">
-            {settings?.companyName ?? "ELMAT"}, l&apos;entreprise BTP qui transforme vos travaux en chantier maîtrisé.
+            {settings?.companyName ?? "ELMAT"}, l&apos;entreprise BTP qui transforme vos projets en réalités durables.
           </h1>
           <p className="mt-5 max-w-2xl text-lg text-zinc-200">
-            Un interlocuteur réactif pour vos dalles béton, murs, ouvertures, rénovations et reprises de maçonnerie autour de Valleiry, Saint-Julien-en-Genevois, Annemasse, Annecy et Genève.
+            Un professionnel réactif pour vos dalles béton, murs, ouvertures, rénovations et reprises de maçonnerie en Haute-Savoie autour de Valleiry, Saint-Julien-en-Genevois, Annemasse, Annecy et Genève.
           </p>
           <div className="mt-7 flex flex-col gap-3 sm:flex-row">
             <Link href="/contact" className="rounded-lg bg-amber-500 px-5 py-3 text-center font-semibold text-zinc-950 transition hover:bg-amber-400">
