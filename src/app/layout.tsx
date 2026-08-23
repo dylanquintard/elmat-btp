@@ -82,12 +82,19 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         />
         <Header />
         <main id="main-content" className="mx-auto w-full max-w-6xl flex-1 px-4 py-10 pb-24 md:pb-10">{children}</main>
-        <div className="fixed inset-x-0 bottom-0 z-50 border-t border-zinc-200 bg-white/95 p-3 shadow-lg backdrop-blur md:hidden">
+        <div
+          className="fixed inset-x-0 bottom-0 z-50 border-t p-3 shadow-[0_-14px_36px_rgba(0,0,0,0.28)] backdrop-blur md:hidden"
+          style={{ backgroundColor: "var(--header-bg)", borderColor: "var(--header-border)" }}
+        >
           <div className="mx-auto flex max-w-6xl gap-2">
-            <a href={phoneHref} className="flex-1 rounded bg-zinc-900 px-3 py-2 text-center text-sm font-semibold text-white">
+            <a href={phoneHref} className="flex-1 rounded border border-white/20 bg-white/10 px-3 py-2 text-center text-sm font-semibold text-white">
               {phoneLabel}
             </a>
-            <a href="/contact" className="flex-1 rounded bg-amber-500 px-3 py-2 text-center text-sm font-semibold text-zinc-900">
+            <a
+              href="/contact"
+              className="flex-1 rounded px-3 py-2 text-center text-sm font-semibold"
+              style={{ backgroundColor: "var(--accent)", color: "var(--accent-text)" }}
+            >
               Devis
             </a>
           </div>
