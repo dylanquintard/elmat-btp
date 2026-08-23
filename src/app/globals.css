@@ -320,6 +320,36 @@ img {
   border-color: var(--surface-border);
 }
 
+:root[data-appearance="dark"] .admin-shell label.border {
+  background-color: color-mix(in srgb, var(--surface-soft) 72%, transparent);
+  border-color: var(--surface-border);
+  color: var(--foreground);
+}
+
+:root[data-appearance="dark"] .admin-shell button.bg-zinc-900,
+:root[data-appearance="dark"] .admin-card button.bg-zinc-900 {
+  background-color: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: var(--accent-text) !important;
+}
+
+:root[data-appearance="dark"] .admin-shell button.bg-zinc-900:hover,
+:root[data-appearance="dark"] .admin-card button.bg-zinc-900:hover {
+  background-color: #071c2e !important;
+  border-color: var(--surface-border) !important;
+  color: #f3f6fb !important;
+}
+
+:root[data-appearance="dark"] .admin-shell button.border-red-300 {
+  background-color: rgba(127, 29, 29, 0.18) !important;
+  border-color: rgba(252, 165, 165, 0.52) !important;
+  color: #fecaca !important;
+}
+
+:root[data-appearance="dark"] .admin-shell button.border-red-300:hover {
+  background-color: rgba(127, 29, 29, 0.34) !important;
+}
+
 :root[data-appearance="dark"] .project-card-surface {
   background: linear-gradient(135deg, var(--surface) 0%, var(--surface-soft) 100%);
 }

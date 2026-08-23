@@ -29,9 +29,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <h2 className="font-semibold">Administration</h2>
           <AdminLogoutButton />
         </div>
-        <nav className="space-y-2 text-sm">
+        <nav className="grid grid-cols-2 gap-2 text-sm sm:grid-cols-3 md:block md:space-y-2">
           {links.map(([name, href]) => (
-            <Link key={href} href={href} className="block rounded px-2 py-1 text-zinc-200 transition hover:bg-zinc-100">
+            <Link key={href} href={href} className="block rounded px-2 py-1 text-zinc-200 ring-1 ring-white/10 transition hover:bg-zinc-100 md:ring-0">
               {name}
             </Link>
           ))}
