@@ -19,6 +19,18 @@ function getFirstByType(
   return images.find((img) => img.type === type) ?? images.find((img) => img.type === "GENERAL") ?? images[0];
 }
 
+function getCityFilterKey(city: string) {
+  return city
+    .trim()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+}
+
+function hasAccent(value: string) {
+  return value.normalize("NFD") !== value;
+}
+
 type RealisationsPageProps = {
   searchParams: Promise<{ city?: string; service?: string }>;
 };
@@ -80,6 +92,22 @@ export default async function RealisationsPage({ searchParams }: RealisationsPag
     .filter((service): service is { slug: string; title: string; isPublished: boolean } => Boolean(service))
     .filter((service) => service.isPublished)
     .sort((a, b) => a.title.localeCompare(b.title, "fr"));
+  const cityFilters = Array.from(
+    cities.reduce((map, entry) => {
+      const city = entry.city?.trim();
+      if (!city) return map;
+
+      const key = getCityFilterKey(city);
+      const current = map.get(key);
+      if (!current || (!hasAccent(current) && hasAccent(city))) {
+        map.set(key, city);
+      }
+
+      return map;
+    }, new Map<string, string>())
+  )
+    .map(([, city]) => city)
+    .sort((a, b) => a.localeCompare(b, "fr"));
   const activeFilterClass = "border-zinc-900 bg-zinc-900 text-white";
   const inactiveFilterClass = "filter-chip transition";
 
@@ -107,19 +135,17 @@ export default async function RealisationsPage({ searchParams }: RealisationsPag
           >
             Tout
           </Link>
-          {cities.map((c) =>
-            c.city ? (
-              <Link
-                key={c.city}
-                href={`/realisations?city=${encodeURIComponent(c.city)}`}
-                className={`rounded border px-3 py-1 text-sm ${
-                  activeCity.toLowerCase() === c.city.toLowerCase() ? activeFilterClass : inactiveFilterClass
-                }`}
-              >
-                {c.city}
-              </Link>
-            ) : null
-          )}
+          {cityFilters.map((city) => (
+            <Link
+              key={city}
+              href={`/realisations?city=${encodeURIComponent(city)}`}
+              className={`rounded border px-3 py-1 text-sm ${
+                getCityFilterKey(activeCity) === getCityFilterKey(city) ? activeFilterClass : inactiveFilterClass
+              }`}
+            >
+              {city}
+            </Link>
+          ))}
           {availableServices.map((s) => (
             <Link
               key={s.slug}
